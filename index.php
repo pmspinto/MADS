@@ -31,6 +31,21 @@
 				//global vars
 				var largura = $(window).width();
 				var altura = $(window).height();
+				var canvasW = largura;
+				var canvasH = altura-34;
+				
+				$(window).bind('resize', function() {
+    				// resize $('.container').width() based on $(window).width()
+					console.log("Detectei resize!");
+					largura = $(window).width();
+					altura = $(window).height();
+					canvasW = largura;
+					canvasH = altura-34;
+					$('#menubar').width(largura);
+					$('#whiteboard').width(largura);
+					$('#whiteboard').height(canvasH);
+					$("#welcomedialog").dialog({ width: largura-200, height: altura-200, modal: true, resizable: false, closeOnEscape: false, open: function(event, ui) { $(".ui-dialog-titlebar-close").hide(); }});
+				});
 				
 				//menu bar
 				$('#menubar').width(largura);
@@ -40,8 +55,6 @@
 				$("#stats_button").button();
 				
 				//whiteboard - backlog
-				var canvasW = largura;
-				var canvasH = altura-34;
 				$('#whiteboard').width(largura);
 				$('#whiteboard').height(canvasH);
 				$('#whiteboard').html('<canvas id="backlog" height="'+canvasH+'" width="'+canvasW+'">You should upgrade your browser...</canvas>');
