@@ -10,6 +10,7 @@ function loginAction() {
 
 
 function ajax_login(email,pw, successCallback) {
+	alert("o pedro esteve aqui");
 	$.ajax({
 		type: 'POST',
 		url: 'http://paginas.fe.up.pt/~ei07073/MADS/ajax/login.php',
