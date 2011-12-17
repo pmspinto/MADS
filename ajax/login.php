@@ -14,13 +14,13 @@
 	//$password = $_POST['password'];
 	$password = $_REQUEST['password'];
 	
-	$query = "SELECT mail, name FROM users WHERE mail = '$username' AND pass = '$password'";
+	$query = "SELECT email, name FROM users WHERE email = '$username' AND pass = '$password'";
 	$result = mysql_query($query) or die('Error logging in: ' . mysql_error());
 	
 	if (mysql_num_rows($result) > 0) {
 		$row = mysql_fetch_assoc($result);
 		
-		$result2 = mysql_query("SELECT id as projid FROM project_users WHERE user = '$username'") or die('Error logging in: ' . mysql_error());
+		$result2 = mysql_query("SELECT id as projid FROM project_users WHERE email = '$username'") or die('Error logging in: ' . mysql_error());
 		while ($row2 = mysql_fetch_assoc($result2))
 			$row['projs'][] = $row2['projid'];
 		
