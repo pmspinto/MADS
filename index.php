@@ -2,9 +2,9 @@
 	session_start();
 	
 	$menu = '';
-	if (isset($_SESSION['usermail'])) { 
-		$menu = '<button id="logout_button" onclick="logout_action();">Logout</button>';
-	}
+	//if (isset($_SESSION['usermail'])) { 
+		$menu = 'lalalala';
+	//}
 ?>
 
 <!DOCTYPE html>
@@ -91,9 +91,9 @@
 </html>
 <script type="text/javascript">
 	disableSelection(document.body); //disable text selection on entire body of page
-	disableSelection(document.getElementById("whiteboard"))
+	disableSelection(document.getElementById("whiteboard"));
 	
-	disableSelection(document.getElementById("menubar"))
+	disableSelection(document.getElementById("menubar"));
 	
 	var postits = document.getElementsByClassName("postit");
 	for (var i = 0; i < postits.length; i++)

@@ -29,11 +29,11 @@ body {
 	padding-left: 20px;
 	font-size: 14px;
 	color: #555555;
-	
 }
 
 #menu {
-	position: fixed;
+	position: relative;
+	float: right;
 	z-index: 10;
 	margin-right: 20px;
 	font-size: 12px;
