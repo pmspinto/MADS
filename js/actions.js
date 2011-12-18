@@ -1,16 +1,15 @@
 function login_action() {
-	//var email = $('#loginemail').value;
-	//var password = $('#loginpassword').value;
+	
+	var email = $('#loginemail').val();
+	var password = $('#loginpassword').val();
 	
 	//usar ou estes tres hardcoded ou o de baixo
-	email = "mads@fe.up.pt";
-	name = "Mads2011";
-	projects = [1, 3];
+	//email = "mads@fe.up.pt";
+	//name = "Mads2011";
+	//projects = [1, 3];
 	
-	
-	//ajax_login(email, password);
-	
-	switchdialog(0);
+	//showProgressDialog();
+	ajax_login(email, password,loginSuccessCallback);
 	
 	//Utilizador = new User(useremail,username);
 	//Utilizador.CurrentProject = response['projs'][0];
@@ -20,30 +19,13 @@ function login_action() {
 }
 
 //TODO
-function ajax_login(email,pw) {
+function ajax_login(email,pw,successCallback) {
 	$.ajax({
 		type: 'POST',
-		url: 'ajax/login.php',
+		url: Config.server+'ajax/login.php',
 		data: { email: email, password: pw },
-		
-		beforeSend:function(){
-			showProgressDialog();
-		},
-		success:function(data){
-			var response = JSON.parse(data);
-			
-			
-			
-			if (response['username'] != null) {
-				$('#welcomedialog').dialog("close");
-				useremail = response['email'];
-				userprojs = response['projects'];
-				username = response['username'];
-			}
-			else {
-				showErrorMsg("Error","Wrong email/password pair");
-			}
-		},
+
+		success:successCallback,
   
 		error:function(){
 			showErrorMsg("Error","Database isn't available.");
@@ -130,6 +112,39 @@ function register_action() {
 	else showErrorMsg("","Passwords do not match or you have blank fields");
 }
 
+
 function trim(stringToTrim) {
 	return stringToTrim.replace(/^\s+|\s+$/g,"");
 }
+
+// function called when the login ajax request is successful
+function loginSuccessCallback(data){
+	var response = JSON.parse(data);
+	
+	if (response['name'] != null) {
+		$('#welcomedialog').dialog("close");
+		useremail = response['email'];
+		userprojs = response['projs'];
+		username = response['name'];
+
+		//load tasks
+		if(userprojs.length > 0){
+			$.ajaxSetup({async:false});
+			tasks = TaskList.getTasksProject(userprojs[0]);
+			$.ajaxSetup({async:true});
+		}
+
+		//initialize the canvas
+		canvasInit(tasks);
+
+		// remove the login window
+		switchdialog(0);
+	}
+	else {
+		showErrorMsg("Error","Wrong email/password pair");
+	}
+	
+
+	// remove progress dialog
+}
+
