@@ -7,21 +7,22 @@
     <script src="http://code.jquery.com/jquery-latest.js"> </script>  
     <script type="text/javascript" src="qunit/qunit.js"></script>  
     
-		<!-- the jquery files -->
-		<script type="text/javascript" src="../js/jquery-1.6.2.min.js"></script>
-		<script type="text/javascript" src="../js/jquery-ui-1.8.16.custom.min.js"></script>
-    
-		<!-- the test files -->
-		<script type="text/javascript" src="login_tests.js"></script>    
+	<!-- the jquery files -->
+	<script type="text/javascript" src="../js/jquery/jquery-1.6.2.min.js"></script>
+	<script type="text/javascript" src="../js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
+
+	<!-- the test files -->
+	<script type="text/javascript" src="login_tests.js"></script>    
     
     	<!-- the source files-->
-    	<script type="text/javascript" src="../js/login_register.js"></script>  
+    	<script type="text/javascript" src="../js/actions.js"></script> 
+    	<script type="text/javascript" src="../js/Config.js"></script> 
     
     	<script type="text/javascript">  
-			$(document).ready(function() {  
-				module("Login");  
-				test("Correct login", testLoginAction);
-
+		$(document).ready(function() {  
+			module("Login");  
+			test("Incorrect", testIncorrectLoginAction);
+			test("Correct", testLoginAction);
 		});
 		
     </script>  
@@ -31,7 +32,7 @@
     <h2 id="qunit-banner"></h2>  
 	<div id="qunit-testrunner-toolbar"></div>
     <h2 id="qunit-userAgent"></h2>  
-    <ol id="qunit-tests">  
-    </ol>  
+    <ol id="qunit-tests"></ol>  
+ <div id="qunit-fixture">test markup, will be hidden</div>
   </body>  
 </html>  

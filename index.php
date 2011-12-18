@@ -18,7 +18,8 @@
 		<link type="text/css" href="css/structstyle.css" rel="stylesheet" />
 		<link type="text/css" href="css/login.css" rel="stylesheet" />
 		<link type="text/css" href="css/project_menu.css" rel="stylesheet" />
-			
+		
+	
 		<script type="text/javascript" src="js/jquery/jquery-1.6.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
 		<script type="text/javascript" src="js/graphs/highcharts.js"></script>
@@ -27,6 +28,7 @@
 		<script type="text/javascript" src="js/dialogs.js"></script>
 		<script type="text/javascript" src="js/actions.js"></script>
 		
+	    	<script type="text/javascript" src="js/Config.js"></script> 
 		<script type="text/javascript" src="js/selections.js"></script>
 		<script type="text/javascript" src="js/canvas.js"></script>
 		<script type="text/javascript" src="js/task.js"></script>
@@ -39,10 +41,6 @@
 			var name;
 			var projects;
 			
-			$.ajaxSetup({async:false});
-			var tasks = TaskList.getTasksProject(2);
-			$.ajaxSetup({async:true});
-			
 			$(document).ready(function () {
 				//global vars
 				largura = $(window).width();
@@ -51,15 +49,14 @@
 
 				//manage globals when resizing
 				$(window).bind('resize', function() {
-                    largura = $(window).width();
-                    altura = $(window).height();
+				largura = $(window).width();
+				altura = $(window).height();
 					
-					init();
-				});
-				
 				init();
+			});
 				
-				canvasInit(tasks);
+			init();
+				
 			});
 			
 			function init() {
