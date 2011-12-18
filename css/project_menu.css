@@ -1,0 +1,59 @@
+/*
+ * Style for project menu
+ */
+
+div.projectMenu {
+	margin-top:15px;
+	/*width: 500px;*/
+}
+
+div#project_menu_members {
+	float: left;
+}
+
+div#project_menu_options {
+	margin-top: 0px;
+}
+
+div#project_menu_members fieldset {
+	height: 420px;
+}
+
+div.projectMenu fieldset {
+  margin-bottom: 10px;
+  width: 575px;
+}
+
+div#project_menu_members button {
+	float: right;
+}
+
+div.projectMenu legend {
+  padding: 0 2px;
+  font-weight: bold;
+}
+
+div.projectMenu div {
+	margin-top: 20px;
+}
+
+div.projectMenu fieldset ol {
+  margin: 0;
+  padding: 0;
+}
+
+div.projectMenu fieldset li {
+  list-style: none;
+  padding: 15px;
+  margin: 0;
+}
+
+div.projectMenu em {
+  font-weight: bold;
+  font-style: normal;
+  color: #f00;
+}
+
+div.projectMenu label {
+  width: 140px;
+}
