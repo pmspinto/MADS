@@ -4,8 +4,8 @@
 
 html, body {
    height: 100%;
-
 }
+
 body {
 	margin: 0px;
 	padding: 0px;
@@ -14,6 +14,9 @@ body {
 }
 
 #menubar {
+	position: fixed;
+	z-index: 10;
+	width: 100%;
 	height: 34px;
 	padding: 0px;
 	margin: 0px;
@@ -26,16 +29,18 @@ body {
 	padding-left: 20px;
 	font-size: 14px;
 	color: #555555;
+	
 }
 
 #menu {
-	float: right;
+	position: fixed;
+	z-index: 10;
 	margin-right: 20px;
 	font-size: 12px;
 }
 
 #whiteboard {
-	background-color: #eeeeee;
+	background-color: black;
 }
 
 #progress_dialog {

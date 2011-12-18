@@ -64,7 +64,7 @@
 			
 			function init() {
 				$('#whiteboard').width(largura);
-				$('#whiteboard').height(altura-34);
+				$('#whiteboard').height(altura);
 				
 				setdialog();
 			}
@@ -77,12 +77,13 @@
 				<?php echo $menu; ?> 
 			</div>
 		</div>
+		
 		<div id="whiteboard">
 			<!-- Main dialog  -->			
 		</div>
 
 		<!-- Progress dialog -->
-		<div id="progress_dialog" title="Progress Dialog" >
+		<div id="progress_dialog" title="Progress Dialog">
 			<img src="images/loading.gif" />		
 		</div>
 		
@@ -92,7 +93,12 @@
 	</body>
 </html>
 <script type="text/javascript">
-disableSelection(document.body); //disable text selection on entire body of page
-var whiteboarddiv=document.getElementById("whiteboard")
-disableSelection(whiteboarddiv)
+	disableSelection(document.body); //disable text selection on entire body of page
+	disableSelection(document.getElementById("whiteboard"))
+	
+	disableSelection(document.getElementById("menubar"))
+	
+	var postits = document.getElementsByClassName("postit");
+	for (var i = 0; i < postits.length; i++)
+		disableSelection(postits[i]);
 </script>

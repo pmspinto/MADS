@@ -1,0 +1,8 @@
+Login
+	Depois de fazer login carregar as tasks
+
+Canvas
+	Seleção de vez em quando
+	Movimentar canvas para fora 
+	Eliminar
+	Editar

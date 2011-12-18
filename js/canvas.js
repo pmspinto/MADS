@@ -39,13 +39,14 @@ function canvasInit(tasks) {
 		
 	for(var i = 0; tasks[i]!=null; i++) {
 		$("#whiteboard").append("<div id="+tasks[i].id+" class='postit'> "+tasks[i].name+"</div>");
-		$("#"+tasks[i].id).draggable({ scroll: true , scrollSensitivity: 100, containment: 'parent' });
+		$("#"+tasks[i].id).draggable({ scroll: false , scrollSensitivity: 100, containment: 'parent' });	
 		$("#"+tasks[i].id).css({ 'width' : width+'px' , 'height': height+'px' , 'padding' : '0.5em', 'position':'absolute', 'top':(altura/2 + tasks[i].priority-height/2)+'px', 'left':(largura/2 + tasks[i].effort-width/2)+'px'});
 	}
 	
 	//$('.postit').editable(alert("ola"), { data   : " {'E':'Letter E','F':'Letter F','G':'Letter G', 'selected':'F'}",type: 'select' });
 	
 	$('#whiteboard').mousedown(function(e) {
+        e.preventDefault();
 		if (supress) {
 			supress = false;
 			px = -1;
@@ -54,13 +55,12 @@ function canvasInit(tasks) {
 			move = true;
 			px = e.pageX - this.offsetLeft;
 			py = e.pageY - this.offsetTop;
-			//alert(py);
 		}
 	});
 	
 	$('#whiteboard').mousemove(function(ev) {
-		if (move && !supress) {
-			//alert('here');
+		console.log(altura + " " + ev.pageY + " " + this.offsetTop);
+		if (move && !supress && altura != ev.pageY+1) {
 			for(var i = 0; tasks[i]!=null; i++) {
 				startpos = $("#"+tasks[i].id).position();
 				$("#"+tasks[i].id).css({"left": (startpos.left + ev.pageX - this.offsetLeft - px) + "px",
@@ -78,8 +78,12 @@ function canvasInit(tasks) {
 		move = false;
 	});
 	
+	$('#whiteboard').mouseout(function(ev) {
+		console.log("MOUSE OUT DETECTED!");
+		move = false;
+	});
+	
 	for (var i = 0; tasks[i]!=null; i++) {
-		
 		$('#'+tasks[i].id).mousedown(function(e) {
 			supress = true;
 			px = -1;
