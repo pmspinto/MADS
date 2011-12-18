@@ -23,7 +23,7 @@ TaskList.parseTasks = function(json) {
 TaskList.getTasksProject = function(idproj) {
 	$.ajax({
 		type: 'POST',
-		url: 'ajax/getTasksProject.php',
+		url: Config.server + 'ajax/getTasksProject.php',
 		data: { idproj: idproj },
 		success: this.parseTasks,
 		error: function(){
@@ -34,7 +34,7 @@ TaskList.getTasksProject = function(idproj) {
 }
 
 TaskList.getTasksUser = function(user) {
-	$.post("ajax/getTasksUser.php",
+	$.post(Config.server + "ajax/getTasksUser.php",
 			{ user: user },
 			this.parseTasks);
 	return this.tasks; 

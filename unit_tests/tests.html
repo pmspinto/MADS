@@ -12,17 +12,23 @@
 	<script type="text/javascript" src="../js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
 
 	<!-- the test files -->
-	<script type="text/javascript" src="login_tests.js"></script>    
+	<script type="text/javascript" src="login_tests.js"></script>
+	<script type="text/javascript" src="task_tests.js"></script>	 
     
     	<!-- the source files-->
     	<script type="text/javascript" src="../js/actions.js"></script> 
-    	<script type="text/javascript" src="../js/Config.js"></script> 
+    	<script type="text/javascript" src="../js/Config.js"></script>
+	<script type="text/javascript" src="../js/task.js"></script>
     
     	<script type="text/javascript">  
 		$(document).ready(function() {  
 			module("Login");  
 			test("Incorrect", testIncorrectLoginAction);
 			test("Correct", testLoginAction);
+
+			module("Tasks");
+			test("Tasks for a project", tasksProject);
+			test("Tasks for a user", tasksUser);
 		});
 		
     </script>  
