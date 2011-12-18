@@ -39,7 +39,7 @@ function canvasInit(tasks) {
 		
 	for(var i = 0; tasks[i]!=null; i++) {
 		$("#whiteboard").append("<div id="+tasks[i].id+" class='postit'> "+tasks[i].name+"</div>");
-		$("#"+tasks[i].id).draggable({ scroll: true , scrollSensitivity: 100 });
+		$("#"+tasks[i].id).draggable({ scroll: true , scrollSensitivity: 100, containment: 'parent' });
 		$("#"+tasks[i].id).css({ 'width' : width+'px' , 'height': height+'px' , 'padding' : '0.5em', 'position':'absolute', 'top':(altura/2 + tasks[i].priority-height/2)+'px', 'left':(largura/2 + tasks[i].effort-width/2)+'px'});
 	}
 	
