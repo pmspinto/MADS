@@ -32,9 +32,13 @@ body {
 	
 }
 
-#menu {
-	position: fixed;
-	z-index: 10;
+#menu_left {
+	float: left;
+	margin-left: 20px;
+}
+
+#menu_right {
+	float:right;
 	margin-right: 20px;
 	font-size: 12px;
 }

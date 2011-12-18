@@ -107,8 +107,7 @@ function welcomedialog() {
 									'</form>'+
 								'</div>'+
 							'</div>	');
-							
-	$('#menu').html('');
+
 	
 	$('#auth_button').button();
 	$('#register_button').button();

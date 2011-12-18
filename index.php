@@ -2,9 +2,16 @@
 	session_start();
 	
 	$menu = '';
-	if (isset($_SESSION['usermail'])) { 
-		$menu = '<button id="logout_button" onclick="logout_action();">Logout</button>';
-	}
+	//if (isset($_SESSION['mail'])) { 
+		$right_menu = '<button id="logout_button" onclick="logout_action();">Logout</button>';
+		$left_menu = '<select id="projectSelector" onchange="projectChange();">
+					<option value="" disabled="disabled">Jump to a project...</option>
+					<option value="" disabled="disabled">---</option>
+			</select>
+
+			<button id="project_button" onclick="launchProjectMenu();">Project</button>
+			<button id="stats_button">Stats</button>';
+	//}
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +71,11 @@
 			
 			function init() {
 				$('#whiteboard').width(largura);
-				$('#whiteboard').height(altura);
+				$('#whiteboard').height(altura);				
+				
+				$('#logout_button').button();
+				$('#project_button').button();
+				$('#stats_button').button();				
 				
 				setdialog();
 			}
@@ -73,8 +84,11 @@
 	<body>
 		<div id="menubar" class="ui-widget-header" >
 			<h1>Banana Tracker</h1>
-			<div id="menu">
-				<?php echo $menu; ?> 
+			<div id="menu_left">
+				<?php echo $left_menu ?>
+			</div>
+			<div id="menu_right">
+				<?php echo $right_menu; ?>
 			</div>
 		</div>
 		
