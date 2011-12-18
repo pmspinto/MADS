@@ -1,3 +1,7 @@
+function trim(stringToTrim) {
+	return stringToTrim.replace(/^\s+|\s+$/g,"");
+}
+
 function login_action() {
 	
 	var email = $('#loginemail').val();
@@ -8,7 +12,7 @@ function login_action() {
 	//name = "Mads2011";
 	//projects = [1, 3];
 	
-	//showProgressDialog();
+	showProgressDialog();
 	ajax_login(email, password,loginSuccessCallback);
 	
 	//Utilizador = new User(useremail,username);
@@ -62,6 +66,10 @@ function showProgressDialog(){
 	});	
 }
 
+function hideProgressDialog(){				
+	$('#progress_dialog').dialog("destroy");	
+}
+
 function showErrorMsg(titulo,errorMessage){
 	
 	document.getElementById('error_dialog').innerHTML = errorMessage;
@@ -112,11 +120,6 @@ function register_action() {
 	else showErrorMsg("","Passwords do not match or you have blank fields");
 }
 
-
-function trim(stringToTrim) {
-	return stringToTrim.replace(/^\s+|\s+$/g,"");
-}
-
 // function called when the login ajax request is successful
 function loginSuccessCallback(data){
 	var response = JSON.parse(data);
@@ -146,5 +149,6 @@ function loginSuccessCallback(data){
 	
 
 	// remove progress dialog
+	hideProgressDialog();
 }
 
