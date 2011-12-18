@@ -59,7 +59,6 @@ function canvasInit(tasks) {
 	});
 	
 	$('#whiteboard').mousemove(function(ev) {
-		console.log(altura + " " + ev.pageY + " " + this.offsetTop);
 		if (move && !supress && altura != ev.pageY+1) {
 			for(var i = 0; tasks[i]!=null; i++) {
 				startpos = $("#"+tasks[i].id).position();
@@ -79,7 +78,6 @@ function canvasInit(tasks) {
 	});
 	
 	$('#whiteboard').mouseout(function(ev) {
-		console.log("MOUSE OUT DETECTED!");
 		move = false;
 	});
 	
