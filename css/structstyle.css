@@ -1,0 +1,52 @@
+/*
+* Structural Style for MADS
+*/
+
+html, body {
+   height: 100%;
+
+}
+body {
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+	font-size: 12px;
+}
+
+#menubar {
+	height: 34px;
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	background-color: #e6e6e6;
+}
+
+#menubar h1 {
+	float: left;
+	padding-left: 20px;
+	font-size: 14px;
+	color: #555555;
+}
+
+#menu {
+	float: right;
+	margin-right: 20px;
+	font-size: 12px;
+}
+
+#whiteboard {
+	background-color: #eeeeee;
+	min-height: 100%;
+}
+
+#progress_dialog {
+	display: none;
+}
+
+#error_dialog {
+	display: none;
+}
+
+.postit {
+	background-image: url(images/postit.svg);
+}
