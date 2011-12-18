@@ -104,14 +104,14 @@ function register_action() {
 	var password = document.getElementById('registerpassword').value;
 	var cpassword = document.getElementById('registercpassword').value;
 	
-	if(password==cpassword) 
+	if(password==cpassword && trim(email)!="" && trim(name)!="" && trim(password)!="") 
 	{
 		
 	 $.post("ajax/register.php",{    
         email: email,
-		  name: name,
+		name: name,
         password: password 
-        }, 
+        },
 		function(data) {
 			
 			if (data=="ok") {
@@ -127,5 +127,9 @@ function register_action() {
 		});    
 
 		}
-	else showErrorMsg("","Passwords do not match");
+	else showErrorMsg("","Passwords do not match or you have blank fields");
+}
+
+function trim(stringToTrim) {
+	return stringToTrim.replace(/^\s+|\s+$/g,"");
 }
