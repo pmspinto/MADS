@@ -16,7 +16,7 @@
 	$query = "INSERT INTO users VALUES ('$username','$password','$name')";
 	$resultA = mysql_query($query);
 
-	$query = "INSERT INTO projects (name,user,creationdate) values ('Tutorial','$username',SYSDATE())";
+	$query = "INSERT INTO projects (name,email,creationdate) values ('Tutorial','$username',SYSDATE())";
 	$resultB = mysql_query($query);
 	$id = mysql_insert_id();
 	
