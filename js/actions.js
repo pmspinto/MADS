@@ -118,9 +118,6 @@ function loginSuccessCallback(data){
 			$.ajaxSetup({async:true});
 		}
 
-		//initialize the canvas
-		//canvasInit();
-
 		// remove the login window
 		switchdialog(2);
 	}
