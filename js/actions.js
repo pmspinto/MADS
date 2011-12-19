@@ -7,19 +7,9 @@ function login_action() {
 	var email = $('#loginemail').val();
 	var password = $('#loginpassword').val();
 	
-	//usar ou estes tres hardcoded ou o de baixo
-	//email = "mads@fe.up.pt";
-	//name = "Mads2011";
-	//projects = [1, 3];
-	
 	showProgressDialog();
 	ajax_login(email, password,loginSuccessCallback);
 	
-	//Utilizador = new User(useremail,username);
-	//Utilizador.CurrentProject = response['projs'][0];
-	//for(proj in response['projs'])
-		//Utilizador.addProject(response['projs'][proj]);
-	//fillProjectSelector();
 }
 
 //TODO
@@ -96,28 +86,21 @@ function register_action() {
 	
 	if(password==cpassword && trim(email)!="" && trim(name)!="" && trim(password)!="") 
 	{
-		
-	 $.post("ajax/register.php",{    
-        email: email,
-		name: name,
-        password: password 
-        },
-		function(data) {
-			
-			if (data=="ok") {
-				showErrorMsg("Success","You have been successfully registered. Welcome.");
-				document.getElementById('loginemail').value = email;
-				document.getElementById('loginpassword').value = password;
-				login_action();
-			}
-			// error message
-			else	{
-				showErrorMsg("Error",data);
-			}
-		});    
+		register_ajax(email, name, password, registerSuccessCallback);
 
-		}
-	else showErrorMsg("","Passwords do not match or you have blank fields");
+	}else showErrorMsg("","Passwords do not match or you have blank fields");
+}
+
+
+function register_ajax(email, name, password, successCallback){
+	$.post(
+	Config.server + "ajax/register.php",
+	{    
+		email: email,
+		name: name,
+		password: password 
+	},
+	successCallback);   
 }
 
 // function called when the login ajax request is successful
@@ -152,3 +135,16 @@ function loginSuccessCallback(data){
 	hideProgressDialog();
 }
 
+// function called when the register ajax request is successful
+function registerSuccessCallback(data){
+		
+	if (data=="ok"){
+		showErrorMsg("Success","You have been successfully registered. Welcome.");
+		document.getElementById('loginemail').value = email;
+		document.getElementById('loginpassword').value = password;
+		login_action();
+	}else{
+		// error message
+		showErrorMsg("Error",data);
+	}
+}

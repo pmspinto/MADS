@@ -12,17 +12,36 @@
 	<script type="text/javascript" src="../js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
 
 	<!-- the test files -->
-	<script type="text/javascript" src="login_tests.js"></script>    
+	<script type="text/javascript" src="login_tests.js"></script>
+	<script type="text/javascript" src="task_tests.js"></script>	
+ 	<script type="text/javascript" src="register_tests.js"></script>
+ 	<script type="text/javascript" src="clear.js"></script>	
     
     	<!-- the source files-->
     	<script type="text/javascript" src="../js/actions.js"></script> 
-    	<script type="text/javascript" src="../js/Config.js"></script> 
+    	<script type="text/javascript" src="../js/Config.js"></script>
+	<script type="text/javascript" src="../js/task.js"></script>
     
     	<script type="text/javascript">  
-		$(document).ready(function() {  
+		$(document).ready(function() { 
+
+			// before running any tests, clear the database
+			clearDB();
+
 			module("Login");  
-			test("Incorrect", testIncorrectLoginAction);
+			test("Incorrect password", testIncorrectLoginAction);
+			test("Incorrect email", testIncorrectLoginAction2);
 			test("Correct", testLoginAction);
+
+			module("Tasks");
+			test("Tasks for a project", tasksProject);
+			test("Tasks for a user", tasksUser);
+
+			module("Register");
+			test("Different passwords", testRegisterActionDifferentPasswords);
+			test("Empty email", testRegisterActionEmptyEmail);
+			test("Empty name", testRegisterActionEmptyName);
+			test("Register and login", testRegisterAndLogin);
 		});
 		
     </script>  

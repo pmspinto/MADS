@@ -11,11 +11,13 @@
 	$id = $_POST['id'];
 	$name = $_POST['name'];
 	$user = $_POST['user'];
-	$sprintdate = $_POST['sprintdate'];
-	$completiondate = $_POST['completiondate'];
 	$idproj = $_POST['idproj'];
+	$idsprint = $_POST['idsprint'];
+	$sprintdone = $_POST['sprintdone'];
+	$priority = $_POST['priority'];
+	$effort = $_POST['effort'];
 	
-	$query = "UPDATE tasks SET name=" . "'" . $name . "',user='" . $user . "',sprintdate='" . $sprintdate . "',completiondate='" . $completiondate . "',idproj=".$idproj . " where id =". $id ;
+	$query = "UPDATE tasks SET name=" . "'" . $name . "',user='" . $user . "',idproj=".$idproj . ",idsprint=".$idsprint . ", sprintdone=".$sprintdone.",priority=".$priority.",effort=".$effort." where id =". $id ;
 			
 	$result = mysql_query($query) or die('Error getting tasks: ' . mysql_error());
 ?>
