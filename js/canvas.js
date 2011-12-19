@@ -46,7 +46,14 @@ function canvasInit(tasks) {
 			// Create the post-it
 			// Get the click position
 			// console.log(ev.pageX + " " + ev.pageY);
-			$("#whiteboard").append("<div id="+ new_task.id +" class='postit'>" + new_task.name + "</div>");
+			$("#whiteboard").append("<div id="+ new_task.id +" class='postit'>" +
+										'<ul style="width:10px; display: none; float: right; background: transparent;">' +
+											'<li class="delete ui-state-default ui-corner-all" style="height: 10px; width:10px; margin: 1px 1px 0px 0px; float:right; cursor:pointer;">' +
+												'<span class="ui-icon ui-icon-close"/>' +
+											'</li>' +
+										'</ul>' +
+										new_task.name + 
+									"</div>");
 			$("#" + new_task.id).draggable({ scroll: true, scrollSensitivity: 100, containment: 'parent' });
 			$("#" + new_task.id).css({ 
 					'width' : (150*factor)+'px',
@@ -151,6 +158,7 @@ function canvasInit(tasks) {
 			// Define double click event to edit the text in the task
 			$('#'+task_id).editable('ajax/updateTaskName.php',{
 					event: "dblclick",
+					onblur: "cancel",
 					style: "opacity: 0.5;"
 			});
 		}
