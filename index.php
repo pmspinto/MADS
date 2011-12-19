@@ -12,8 +12,7 @@
 		<link type="text/css" href="css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
 		<link type="text/css" href="css/structstyle.css" rel="stylesheet" />
 		<link type="text/css" href="css/login.css" rel="stylesheet" />
-		<link type="text/css" href="css/project_menu.css" rel="stylesheet" />
-		
+		<link type="text/css" href="css/project_menu.css" rel="stylesheet" />		
 	
 		<script type="text/javascript" src="js/jquery/jquery-1.6.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
@@ -71,6 +70,8 @@
 			<h1>Banana Tracker</h1>
 			<div id="menu">
 				<!-- Menu -->
+			</div>
+			<div id="menu_canvas">
 			</div>
 		</div>
 		

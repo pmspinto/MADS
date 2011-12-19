@@ -90,7 +90,8 @@ function welcomedialog() {
 								'</div>'+
 							'</div>	');
 						
-	$('#menu').html('');			
+	$('#menu').html('');	
+	$('#menu_canvas').html('');	
 	$('#auth_button').button();
 	$('#register_button').button();
 	
@@ -191,7 +192,29 @@ function project() {
 	});
 	
 	$('#menu').html('<button id="logout_button" onclick="logout_action();">Logout</button>');
+	$('#menu_canvas').html(
+		'<button id="sprint_number" onclick="next_sprint();">' +
+			1 +
+		'</button>' +
+		'<button id="next_sprint" onclick="next_sprint();">' +
+			'<img class="next_sprint_icon" src="css/images/next_sprint.png" align="absmiddle">' +
+		'</button>' +
+		'<button id="filter_done" onclick="filter_done();">' +
+			'<img class="postit_icon" src="css/images/done_postit_icon.png" align="absmiddle">' +
+			'Done' +
+		'</button>' +
+		'<button id="filter_sprint" onclick="filter_sprint();">' +
+			'<img class="postit_icon" src="css/images/sprint_postit_icon.png" align="absmiddle">' +
+			'Sprint' +
+		'</button>');
+		
 	$('#logout_button').button();
+	$('#filter_done').button();
+	$('#filter_sprint').button();
+	$('#next_sprint').button();
+	
+	$('#sprint_number').button();
+	$('#sprint_number').attr("disabled", true);
 	
 	$("#projectdialog").dialog({ width: largura-200, 
 							  height: altura-200, 

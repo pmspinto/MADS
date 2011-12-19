@@ -38,6 +38,12 @@ body {
 	font-size: 12px;
 }
 
+#menu_canvas {
+	float: left;
+	z-index: 10;
+	margin-left:20px;
+}
+
 #whiteboard {
 	background-color: #eeeeee;
 }
@@ -165,4 +171,16 @@ body {
 	color: red;
 	font-size: 12px;
 	letter-spacing:-1px
+}
+
+img.postit_icon {
+	width: auto;
+	height: 15px;
+	margin-right:5px;
+}
+
+img.next_sprint_icon {
+	width: auto;
+	height: 16px;
+	margin-right: 5px;
 }
