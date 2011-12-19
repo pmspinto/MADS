@@ -107,7 +107,8 @@ function loginSuccessCallback(data){
 		projects = response['projs'];
 		name = response['name'];
 
-		currentProject = new Project(projects[0]);
+		console.log(projects);
+		currentProject = new Project(projects[0]['id']);
 
 		//load tasks
 		if(projects.length > 0){
@@ -118,7 +119,7 @@ function loginSuccessCallback(data){
 		}
 
 		//initialize the canvas
-		canvasInit();
+		//canvasInit();
 
 		// remove the login window
 		switchdialog(2);

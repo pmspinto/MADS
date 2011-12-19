@@ -19,9 +19,9 @@
 	if (mysql_num_rows($result) > 0) {
 		$row = mysql_fetch_assoc($result);
 		
-		$result2 = mysql_query("SELECT id as projid FROM project_users WHERE email = '$username'") or die('Error logging in: ' . mysql_error());
-		while ($row2 = mysql_fetch_assoc($result2))
-			$row['projs'][] = $row2['projid'];
+		$result2 = mysql_query("SELECT `name`,projects.id as projid FROM project_users, projects WHERE project_users.email = '$username' and project_users.id = projects.id") or die('Error logging in: ' . mysql_error());
+		while ($row2 = mysql_fetch_assoc($result2)) 
+			$row['projs'][] = array('id' => $row2['projid'], 'name' => $row2['name']);
 		
 		//$_SESSION['usermail'] = $row['mail'];
 		$_SESSION['usermail'] = $_POST['email'];

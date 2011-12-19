@@ -45,7 +45,7 @@
 				//global vars
 				largura = $(window).width();
 				altura = $(window).height();
-				state = 1;
+				state = 0;
 
 				//manage globals when resizing
 				$(window).bind('resize', function() {
@@ -62,7 +62,7 @@
 				$('#whiteboard').width(largura);
 				$('#whiteboard').height(altura);	
 				
-				setdialog();
+				switchdialog(1);
 			}
 		</script>
 	</head>
