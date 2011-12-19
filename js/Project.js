@@ -1,3 +1,5 @@
+var superDuperMegaProject = null;
+
 function parseTasks(json, proj) {
 	rr = eval(json);
 	for(var i = 0 ; rr[i]!=null; i++) {
@@ -15,13 +17,47 @@ function parseTasks(json, proj) {
 	}
 }
 
+function parseProjectInfo(json){
+
+	console.log("dentro do parse do project");
+	console.log(json);
+	data = JSON.parse(json);
+	console.log(data);
+
+	// the project info
+	superDuperMegaProject.name = data.name;
+	superDuperMegaProject.email = data.email;
+	superDuperMegaProject.creationDate = data.creationdate;
+	superDuperMegaProject.description = data.description;
+	
+	// the project users
+	for(i in data.users)
+		superDuperMegaProject.users[data.users[i]["email"]] = data.users[i]["name"];
+}
+
 function Project(id) {
 	this.id = id;
 	
 	this.tasks = new Array();
+	this.users = new Array();
 	
 	this.loadProjInfo = function() {
-		console.log('loadProjInfo not done yet');
+		console.log('inside loadProjInfo');
+		superDuperMegaProject = this;
+		$.ajax({
+			async: false,
+			type: 'POST',
+			url: Config.server + 'ajax/loadProjectInfo.php',
+			data : {projectID: this.id},
+			success: function(data){
+				parseProjectInfo(data);
+			},
+			error: function(){
+					console.log("error loading project info");
+			}
+		});
+		console.log(superDuperMegaProject.creationDate);
+		console.log(superDuperMegaProject.users);
 	}
 	
 	this.loadProjTasks = function() {

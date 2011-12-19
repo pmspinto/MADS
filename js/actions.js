@@ -122,7 +122,7 @@ function loginSuccessCallback(data){
 		//load tasks
 		if(projects.length > 0){
 			$.ajaxSetup({async:false});
-			//currentProject.loadProjInfo();
+			currentProject.loadProjInfo();
 			currentProject.loadProjTasks();
 			$.ajaxSetup({async:true});
 		}
