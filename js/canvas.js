@@ -10,7 +10,60 @@ function canvasInit(tasks) {
 	var px = -1, py = -1; // previous
 	var move = false; // in motion (canvas)
 	var factor = 1;
+		
+	var task_click = false;
+		
+	for(var i = 0; tasks[i]!=null; i++) {
+		$("#whiteboard").append("<div id="+tasks[i].id+" class='postit'> "+tasks[i].name+"</div>");
+		$("#"+tasks[i].id).draggable({ scroll: true , scrollSensitivity: 100, containment: 'parent' });
+		$("#"+tasks[i].id).css({ 'width' : width+'px' , 'height': height+'px' , 'padding' : '0.5em', 'position':'absolute', 'top':(altura/2 + tasks[i].priority-height/2)+'px', 'left':(largura/2 + tasks[i].effort-width/2)+'px'});
+	}
 	
+		
+	for (var i = 0; tasks[i]!=null; i++)
+		bind_mouse_events(tasks[i].id);
+	
+	//$('.postit').editable(alert("ola"), { data   : " {'E':'Letter E','F':'Letter F','G':'Letter G', 'selected':'F'}",type: 'select' });
+	
+	
+	/** EVENTOS ASSOCIADOS AO WHITEBOARD
+	*	DOUBLECLICK, MOUSEWHEEL, MOUSEUP, MOUSEDOWN e MOUSEMOVE **/
+	
+	// Criar uma task nova
+	$('#whiteboard').dblclick(function(ev) {
+		if(!task_click){
+			// É necessário pedir a' BD que crie uma nova task para atribuir um id
+			// Da-se um id dummy ao construtor que depois é actualizado no addTask()
+			// NECESSARIO DESCOBRIR:
+			// User, id do projecto, id do sprint e effort e priority dependendo de onde foi clickado
+			new_effort = (ev.pageX - ((centerx)*factor + largura/2))/factor;
+			new_priority = (ev.pageY - ((centery)*factor + altura/2))/factor;
+			
+			new_task = new Task(0, "Set content", "mads@fe.up.pt", null , null, 2, 1, new_priority, new_effort);
+			new_task.addTask();
+			tasks.push(new_task);
+			
+			// Create the post-it
+			// Get the click position
+			// console.log(ev.pageX + " " + ev.pageY);
+			$("#whiteboard").append("<div id="+ new_task.id +" class='postit'>" + new_task.name + "</div>");
+			$("#" + new_task.id).draggable({ scroll: true, scrollSensitivity: 100, containment: 'parent' });
+			$("#" + new_task.id).css({ 
+					'width' : (150*factor)+'px',
+					'height': (150*factor)+'px' ,
+					'font-size': factor*100+'%',
+					'padding' : '0.5em',
+					'position':'absolute',
+					'top':(altura/2 + new_task.priority-height/2)+'px',
+					'left':(largura/2 + new_task.effort-width/2)+'px'});
+		
+			// Set up the mouse events on the new TASK
+			bind_mouse_events(new_task.id);
+		}
+		else task_click = false;
+	});
+	
+	// Scroll, zoom-in e zoom-out
 	$('#whiteboard').bind('mousewheel', function(e) {
 		if (!move && !supress) {
 			if(e.wheelDelta > 0)
@@ -34,17 +87,8 @@ function canvasInit(tasks) {
 		}
 		
 	});
-		
-	//console.log(tasks.length);
-		
-	for(var i = 0; tasks[i]!=null; i++) {
-		$("#whiteboard").append("<div id="+tasks[i].id+" class='postit'> "+tasks[i].name+"</div>");
-		$("#"+tasks[i].id).draggable({ scroll: true , scrollSensitivity: 100, containment: 'parent' });
-		$("#"+tasks[i].id).css({ 'width' : width+'px' , 'height': height+'px' , 'padding' : '0.5em', 'position':'absolute', 'top':(altura/2 + tasks[i].priority-height/2)+'px', 'left':(largura/2 + tasks[i].effort-width/2)+'px'});
-	}
 	
-	//$('.postit').editable(alert("ola"), { data   : " {'E':'Letter E','F':'Letter F','G':'Letter G', 'selected':'F'}",type: 'select' });
-	
+	// Mover os post-its
 	$('#whiteboard').mousedown(function(e) {
 		if (supress) {
 			supress = false;
@@ -58,6 +102,7 @@ function canvasInit(tasks) {
 		}
 	});
 	
+	// Move os post-its
 	$('#whiteboard').mousemove(function(ev) {
 		if (move && !supress) {
 			//alert('here');
@@ -78,26 +123,41 @@ function canvasInit(tasks) {
 		move = false;
 	});
 	
-	for (var i = 0; tasks[i]!=null; i++) {
+
+	// EVENTOS DOS POST ITs
+	function bind_mouse_events(task_id){
 		
-		$('#'+tasks[i].id).mousedown(function(e) {
+		$('#'+task_id).mousedown(function(e) {
 			supress = true;
 			px = -1;
 		});
 		
-		$('#'+tasks[i].id).mouseup(function(e) {
+		$('#'+task_id).mouseup(function(e) {
 			// update locally
-			var j;
-			for (j = 0; tasks[j] != null; j++)
-				if (tasks[j].id == this.id)
-					break;
+			var j = get_task_index(this.id);
 			
 			endpos = $('#'+this.id).position();
 			
 			tasks[j].effort += (endpos.left - ((tasks[j].effort-centerx)*factor + largura/2 - factor*width/2))/factor;
 			tasks[j].priority += (endpos.top - ((tasks[j].priority-centery)*factor + altura/2 - factor*height/2))/factor;
 			// update priority & effort in DB
-			// tasks[j].saveTask();
+			tasks[j].saveTask();
 		});
+		
+		// Define double click event to edit the text in the task
+		$('#'+task_id).editable('ajax/updateTaskName.php',{
+				event: "dblclick",
+				style: "opacity: 0.5;"
+		});
+	}
+	
+	
+	// MISC FUNCTIONS
+	function get_task_index(task_id){
+		var j;
+		for (j = 0; tasks[j] != null; j++)
+			if (tasks[j].id == task_id)
+				break;
+		return j;
 	}
 }
