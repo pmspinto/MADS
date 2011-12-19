@@ -109,19 +109,22 @@ function loginSuccessCallback(data){
 	
 	if (response['name'] != null) {
 		$('#welcomedialog').dialog("close");
-		useremail = response['email'];
-		userprojs = response['projs'];
-		username = response['name'];
+		email = response['email'];
+		projects = response['projs'];
+		name = response['name'];
+
+		currentProject = new Project(projects[0]);
 
 		//load tasks
-		if(userprojs.length > 0){
+		if(projects.length > 0){
 			$.ajaxSetup({async:false});
-			tasks = TaskList.getTasksProject(userprojs[0]);
+			//currentProject.loadProjInfo();
+			currentProject.loadProjTasks();
 			$.ajaxSetup({async:true});
 		}
 
 		//initialize the canvas
-		canvasInit(tasks);
+		canvasInit();
 
 		// remove the login window
 		switchdialog(0);
