@@ -10,9 +10,7 @@ function canvasInit(tasks) {
 	var px = -1, py = -1; // previous
 	var move = false; // in motion (canvas)
 	var factor = 1;
-		
-	var task_click = false;
-		
+				
 	for(var i = 0; tasks[i]!=null; i++) {
 		$("#whiteboard").append("<div id="+tasks[i].id+" class='postit'> "+tasks[i].name+"</div>");
 		$("#"+tasks[i].id).draggable({ scroll: true , scrollSensitivity: 100, containment: 'parent' });
@@ -31,36 +29,39 @@ function canvasInit(tasks) {
 	
 	// Criar uma task nova
 	$('#whiteboard').dblclick(function(ev) {
-		if(!task_click){
-			// É necessário pedir a' BD que crie uma nova task para atribuir um id
-			// Da-se um id dummy ao construtor que depois é actualizado no addTask()
-			// NECESSARIO DESCOBRIR:
-			// User, id do projecto, id do sprint e effort e priority dependendo de onde foi clickado
-			new_effort = (ev.pageX - ((centerx)*factor + largura/2))/factor;
-			new_priority = (ev.pageY - ((centery)*factor + altura/2))/factor;
-			
-			new_task = new Task(0, "Set content", "mads@fe.up.pt", 2, 1, 0, new_priority, new_effort);
-			new_task.addTask();
-			tasks.push(new_task);
-			
-			// Create the post-it
-			// Get the click position
-			// console.log(ev.pageX + " " + ev.pageY);
-			$("#whiteboard").append("<div id="+ new_task.id +" class='postit'>" + new_task.name + "</div>");
-			$("#" + new_task.id).draggable({ scroll: true, scrollSensitivity: 100, containment: 'parent' });
-			$("#" + new_task.id).css({ 
-					'width' : (150*factor)+'px',
-					'height': (150*factor)+'px' ,
-					'font-size': factor*100+'%',
-					'padding' : '0.5em',
-					'position':'absolute',
-					'top':(altura/2 + new_task.priority-height/2)+'px',
-					'left':(largura/2 + new_task.effort-width/2)+'px'});
+		// É necessário pedir a' BD que crie uma nova task para atribuir um id
+		// Da-se um id dummy ao construtor que depois é actualizado no addTask()
+		// TODO - NECESSARIO DESCOBRIR:
+		// User, id do projecto, id do sprint e effort e priority dependendo de onde foi clickado
 		
-			// Set up the mouse events on the new TASK
-			bind_mouse_events(new_task.id);
-		}
-		else task_click = false;
+		new_effort = centerx + (ev.pageX - largura/2)/factor;
+		new_priority = centery + (ev.pageY - altura/2)/factor;
+				
+		new_task = new Task(0, "Set content", "mads@fe.up.pt", 2, 1, 0, new_priority, new_effort);
+		console.log('going to add');
+		new_task.addTask();
+		console.log('added');
+		tasks.push(new_task);
+		console.log('pushed');
+		
+		// Create the post-it
+		// Get the click position
+		// console.log(ev.pageX + " " + ev.pageY);
+		$("#whiteboard").append("<div id="+ new_task.id +" class='postit'>" + new_task.name + "</div>");
+		$("#" + new_task.id).draggable({ scroll: true, scrollSensitivity: 100, containment: 'parent' });
+		$("#" + new_task.id).css({ 
+				'width' : (150*factor)+'px',
+				'height': (150*factor)+'px' ,
+				'font-size': factor*100+'%',
+				'padding' : '0.5em',
+				'position':'absolute',
+				'left': ((new_effort-centerx)*factor + largura/2 - factor*width/2)+'px',
+				'top': ((new_priority-centery)*factor + altura/2 - factor*width/2)+'px'});
+	
+		console.log(new_effort + " " + new_priority);
+	
+		// Set up the mouse events on the new TASK
+		bind_mouse_events(new_task.id);
 	});
 	
 	// Scroll, zoom-in e zoom-out
@@ -130,7 +131,7 @@ function canvasInit(tasks) {
 	// EVENTOS DOS POST ITs
 	function bind_mouse_events(task_id){
 		
-		for (var i = 0; tasks[i]!=null; i++) {
+		for (var i = 0; tasks[i]!=null; i++) {			
 			$('#'+tasks[i].id).mousedown(function(e) {
 				supress = true;
 				px = -1;
