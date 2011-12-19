@@ -29,7 +29,9 @@
 		<script type="text/javascript" src="js/dialogs.js"></script>
 		<script type="text/javascript" src="js/actions.js"></script>
 		
-		<script type="text/javascript" src="js/Config.js"></script> 
+	    <script type="text/javascript" src="js/Config.js"></script> 
+		<script type="text/javascript" src="js/Project.js"></script>
+		
 		<script type="text/javascript" src="js/selections.js"></script>
 		<script type="text/javascript" src="js/canvas.js"></script>
 		<script type="text/javascript" src="js/task.js"></script>
@@ -41,6 +43,8 @@
 			var email;
 			var name;
 			var projects;
+			
+			var currentProject = new Project();
 			
 			$(document).ready(function () {
 				//global vars
