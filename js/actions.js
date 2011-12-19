@@ -9,7 +9,6 @@ function login_action() {
 	
 	showProgressDialog();
 	ajax_login(email, password,loginSuccessCallback);
-	
 }
 
 //TODO
@@ -48,20 +47,11 @@ function ajax_logout() {
 }
 
 function showProgressDialog(){				
-	$('#progress_dialog').show();	
-	
-	/*
-	$('#progress_dialog').dialog({
-		resizable: false,
-		draggable: false,
-		modal: true,
-		open: function(event, ui) { $(".ui-dialog-titlebar-close").hide(); }
-	});	*/
+	$('#progress_icon').show();	
 }
 
 function hideProgressDialog(){				
-	//$('#progress_dialog').dialog("destroy");
-	$('#progress_dialog').hide();	
+	$('#progress_icon').hide();	
 }
 
 function showErrorMsg(titulo,errorMessage){
@@ -113,25 +103,23 @@ function loginSuccessCallback(data){
 	
 	if (response['name'] != null) {
 		$('#welcomedialog').dialog("close");
-		email = response['email'];
-		projects = response['projs'];
-		name = response['name'];
+		vgemail = response['email'];
+		vgprojects = response['projs'];
+		vgname = response['name'];
 
-		currentProject = new Project(projects[0]);
+		console.log(vgprojects);
+		currentProject = new Project(vgprojects[0]['id']);
 
 		//load tasks
-		if(projects.length > 0){
+		if(vgprojects.length > 0){
 			$.ajaxSetup({async:false});
 			currentProject.loadProjInfo();
 			currentProject.loadProjTasks();
 			$.ajaxSetup({async:true});
 		}
 
-		//initialize the canvas
-		canvasInit();
-
 		// remove the login window
-		switchdialog(0);
+		switchdialog(2);
 	}
 	else {
 		showErrorMsg("Error","Wrong email/password pair");

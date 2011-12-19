@@ -1,16 +1,15 @@
 //GRAPHS
 
-function Burndown(project, xVars) {
+function Graph(project, xVars, yVars, xLegend, yLegend, typeText, container) {
 	var chart;
 	chart = new Highcharts.Chart({
 		chart: {
-			renderTo: 'graph_container',
+			renderTo: container,
 			defaultSeriesType: 'line',
-			
 			marginBottom: 55
 		},
 		title: {
-			text: 'Burndown chart',
+			text: typeText+' chart',
 			x: -20 //center
 		},
 		subtitle: {
@@ -19,13 +18,13 @@ function Burndown(project, xVars) {
 		},
 		xAxis: {
 			title: {
-				text: 'Sprint'
+				text: xLegend
 			},
 			categories: xVars
 		},
 		yAxis: {
 			title: {
-				text: 'Effort Points Left'
+				text: yLegend
 			},
 			min: 0,
 			plotLines: [{
@@ -36,7 +35,7 @@ function Burndown(project, xVars) {
 		},
 		tooltip: {
 			formatter: function() {
-					return '<b>'+ this.series.name +'</b><br/>'+
+					return '<b>'+ project +'</b><br/>'+
 					'Task n';
 			}
 		},
@@ -44,7 +43,7 @@ function Burndown(project, xVars) {
 			enabled: false
 		},
 		series: [{
-			data: [ 28, 25, 23, 21, 18, 14, 10, 7, 6, 5, 3, 0]
+			data: yVars
 		}]
 	});	
 }

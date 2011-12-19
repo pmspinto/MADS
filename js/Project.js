@@ -1,20 +1,21 @@
 var superDuperMegaProject = null;
 
 function parseTasks(json, proj) {
-	rr = eval(json);
-	for(var i = 0 ; rr[i]!=null; i++) {
-		id = rr[i].id;
-		name = rr[i].name;
-		
-		user = rr[i].user;
-		idproj = rr[i].idproj;
-		idsprint = rr[i].idsprint;
-		sprintdone = rr[i].sprintdone;
-		priority = parseInt(rr[i].priority);
-		effort = parseInt(rr[i].effort);
-		t = new Task(id,name,user,idproj,idsprint,sprintdone,priority,effort);
-		proj.tasks.push(t);
-	}
+    rr = eval(json);
+    for(var i = 0 ; rr[i]!=null; i++) {
+        id = rr[i].id;
+        name = rr[i].name;
+        
+        user = rr[i].user;
+        idproj = rr[i].idproj;
+        idsprint = rr[i].idsprint;
+        sprintdone = rr[i].sprintdone;
+        priority = parseInt(rr[i].priority);
+        effort = parseInt(rr[i].effort);
+        t = new Task(id,name,user,idproj,idsprint,sprintdone,priority,effort);
+        proj.tasks.push(t);
+    }
+    
 }
 
 function parseProjectInfo(json){
@@ -59,21 +60,19 @@ function Project(id) {
 		console.log(superDuperMegaProject.creationDate);
 		console.log(superDuperMegaProject.users);
 	}
-	
-	this.loadProjTasks = function() {
-		$.ajax({
-			type: 'POST',
-			url: Config.server + 'ajax/getTasksProject.php',
-			data: { idproj: this.id },
-			success: function(data){
-				parseTasks(data, currentProject);
-			},
-			error: function(){
-				console.log('error in getTasksProject');
-			}
-		});
-		
-		return this.tasks;
-	}
-	
+    
+    this.loadProjTasks = function() {
+        $.ajax({
+            type: 'POST',
+            url: Config.server + 'ajax/getTasksProject.php',
+            data: { idproj: this.id },
+            success: function(data){
+                parseTasks(data, currentProject);
+            },
+            error: function(){
+                console.log('error in getTasksProject');
+            }
+        });
+    }
+    
 }
