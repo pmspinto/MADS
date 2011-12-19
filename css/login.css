@@ -22,6 +22,8 @@
 	padding-right: 16%;
 }
 
+#progress_dialog
+
 #loginright{
 	width: 45%;
 	float: right;
@@ -80,4 +82,9 @@ form.loginform label {
 
 form.loginform fieldset fieldset label {
   margin-left: 103px;
+}
+
+form.loginform li img {
+	width: auto;
+	height: 20px;
 }

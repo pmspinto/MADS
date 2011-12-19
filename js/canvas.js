@@ -1,4 +1,4 @@
-function canvasInit(tasks) {
+function canvasInit(tasks) {	
 	var zoom = 0;
 	var centerx = 0;
 	var centery = 0;
@@ -10,16 +10,16 @@ function canvasInit(tasks) {
 	var px = -1, py = -1; // previous
 	var move = false; // in motion (canvas)
 	var factor = 1;
-				
-	for(var i = 0; tasks[i]!=null; i++) {
-		$("#whiteboard").append("<div id="+tasks[i].id+" class='postit'> "+tasks[i].name+"</div>");
-		$("#"+tasks[i].id).draggable({ scroll: true , scrollSensitivity: 100, containment: 'parent' });
-		$("#"+tasks[i].id).css({ 'width' : width+'px' , 'height': height+'px' , 'padding' : '0.5em', 'position':'absolute', 'top':(altura/2 + tasks[i].priority-height/2)+'px', 'left':(largura/2 + tasks[i].effort-width/2)+'px'});
+	
+	for(var i = 0; currentProject.tasks[i]!=null; i++) {
+		$("#whiteboard").append("<div id="+currentProject.tasks[i].id+" class='postit'> "+currentProject.tasks[i].name+"</div>");
+		$("#"+currentProject.tasks[i].id).draggable({ scroll: true , scrollSensitivity: 100, containment: 'parent' });
+		$("#"+currentProject.tasks[i].id).css({ 'width' : width+'px' , 'height': height+'px' , 'padding' : '0.5em', 'position':'absolute', 'top':(altura/2 + currentProject.tasks[i].priority-height/2)+'px', 'left':(largura/2 + currentProject.tasks[i].effort-width/2)+'px'});
 	}
 	
 		
-	for (var i = 0; tasks[i]!=null; i++)
-		bind_mouse_events(tasks[i].id);
+	for (var i = 0; currentProject.tasks[i]!=null; i++)
+		bind_mouse_events(currentProject.tasks[i].id);
 	
 	//$('.postit').editable(alert("ola"), { data   : " {'E':'Letter E','F':'Letter F','G':'Letter G', 'selected':'F'}",type: 'select' });
 	
@@ -38,11 +38,8 @@ function canvasInit(tasks) {
 		new_priority = centery + (ev.pageY - altura/2)/factor;
 				
 		new_task = new Task(0, "Set content", "mads@fe.up.pt", 2, 1, 0, new_priority, new_effort);
-		console.log('going to add');
 		new_task.addTask();
-		console.log('added');
-		tasks.push(new_task);
-		console.log('pushed');
+		currentProject.tasks.push(new_task);
 		
 		// Create the post-it
 		// Get the click position
@@ -74,15 +71,15 @@ function canvasInit(tasks) {
 			
 			factor = Math.pow(0.8, zoom);
 			
-			for(var i = 0; tasks[i]!=null; i++) {
+			for(var i = 0; currentProject.tasks[i]!=null; i++) {
 				newheight = factor*height;
 				newwidth = factor*width;
-				$("#"+tasks[i].id).css( { 
+				$("#"+currentProject.tasks[i].id).css( { 
 						'width': newwidth,
 						'height': newheight,
 						'font-size': factor*100+'%',
-						'left': ((tasks[i].effort-centerx)*factor + largura/2 - newwidth/2)+'px',
-						'top': ((tasks[i].priority-centery)*factor + altura/2 - newheight/2)+'px'
+						'left': ((currentProject.tasks[i].effort-centerx)*factor + largura/2 - newwidth/2)+'px',
+						'top': ((currentProject.tasks[i].priority-centery)*factor + altura/2 - newheight/2)+'px'
 					} );
 			}
 		}
@@ -107,9 +104,9 @@ function canvasInit(tasks) {
 	// Move os post-its
 	$('#whiteboard').mousemove(function(ev) {
 		if (move && !supress && altura != ev.pageY+1) {
-			for(var i = 0; tasks[i]!=null; i++) {
-				startpos = $("#"+tasks[i].id).position();
-				$("#"+tasks[i].id).css({"left": (startpos.left + ev.pageX - this.offsetLeft - px) + "px",
+			for(var i = 0; currentProject.tasks[i]!=null; i++) {
+				startpos = $("#"+currentProject.tasks[i].id).position();
+				$("#"+currentProject.tasks[i].id).css({"left": (startpos.left + ev.pageX - this.offsetLeft - px) + "px",
 										"top": (startpos.top + ev.pageY - this.offsetTop - py) + "px"}); 
 			}
 			centerx -= (ev.pageX - this.offsetLeft - px)/factor;
@@ -131,8 +128,8 @@ function canvasInit(tasks) {
 	// EVENTOS DOS POST ITs
 	function bind_mouse_events(task_id){
 		
-		for (var i = 0; tasks[i]!=null; i++) {			
-			$('#'+tasks[i].id).mousedown(function(e) {
+		for (var i = 0; currentProject.tasks[i]!=null; i++) {			
+			$('#'+currentProject.tasks[i].id).mousedown(function(e) {
 				supress = true;
 				px = -1;
 			});
@@ -143,10 +140,10 @@ function canvasInit(tasks) {
 				
 				endpos = $('#'+this.id).position();
 				
-				tasks[j].effort += (endpos.left - ((tasks[j].effort-centerx)*factor + largura/2 - factor*width/2))/factor;
-				tasks[j].priority += (endpos.top - ((tasks[j].priority-centery)*factor + altura/2 - factor*height/2))/factor;
+				currentProject.tasks[j].effort += (endpos.left - ((currentProject.tasks[j].effort-centerx)*factor + largura/2 - factor*width/2))/factor;
+				currentProject.tasks[j].priority += (endpos.top - ((currentProject.tasks[j].priority-centery)*factor + altura/2 - factor*height/2))/factor;
 				// update priority & effort in DB
-				tasks[j].saveTask();
+				currentProject.tasks[j].saveTask();
 			});
 			
 			// Define double click event to edit the text in the task
@@ -161,8 +158,8 @@ function canvasInit(tasks) {
 	// MISC FUNCTIONS
 	function get_task_index(task_id){
 		var j;
-		for (j = 0; tasks[j] != null; j++)
-			if (tasks[j].id == task_id)
+		for (j = 0; currentProject.tasks[j] != null; j++)
+			if (currentProject.tasks[j].id == task_id)
 				break;
 		return j;
 	}
