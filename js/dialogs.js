@@ -104,13 +104,19 @@ function welcomedialog() {
 								});
 }
 function project() {
+	projectMenu = '<div id="projectmenu"><p>'+vgname+' </p><p> </p>';
+	
+	for(var i = 0; i<vgprojects.length; i++) {
+		console.log(vgprojects[i]);
+		if(vgprojects[i]['id'] == currentProject.id)
+			projectMenu += '<div id="projectmenuselected"><p>'+vgprojects[i]['name']+'</p></div>';
+		else
+			projectMenu += '<p>'+vgprojects[i]['name']+'</p>'
+	}					
+	projectMenu += '</div>';
+
 	$("#whiteboard").html( '<div id="projectdialog" title="Projects">'+
-								'<div id="projectmenu">'+
-									'<p> </p><p> </p>'+
-									'<div id="projectmenuselected"><p>Mads2011</p></div>'+
-									'<p>Dissertation</p>'+
-									'<p>Christmas Gifts</p>'+
-								'</div>'+
+								projectMenu+
 								'<div id="projectcontent">'+
 									'<button id="proj_info">Project Info</button>'+
 									'<button id="proj_burndown">Burndown Chart</button>'+

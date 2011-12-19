@@ -35,9 +35,9 @@
 			var altura;
 			var state;
 			
-			var email;
-			var name;
-			var projects;
+			var vgemail;
+			var vgname;
+			var vgprojects;
 			
 			var currentProject = new Project();
 			

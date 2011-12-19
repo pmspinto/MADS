@@ -7,4 +7,4 @@ function Config(){
 // the server location
 // every path shoudl be built this way:
 // Config.server + <relative_path>
-Config.server = "http://paginas.fe.up.pt/~ei07073/MADS/";
+Config.server = "http://localhost/mads/";
