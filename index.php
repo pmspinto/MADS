@@ -1,10 +1,5 @@
 <?php
 	session_start();
-	
-	$menu = '';
-	//if (isset($_SESSION['usermail'])) { 
-		$menu = 'lalalala';
-	//}
 ?>
 
 <!DOCTYPE html>
@@ -54,14 +49,13 @@
 
 				//manage globals when resizing
 				$(window).bind('resize', function() {
-				largura = $(window).width();
-				altura = $(window).height();
+					largura = $(window).width();
+					altura = $(window).height();
+					
+					init();
+				});
 				
 				init();
-			});
-				
-			init();
-			$('#progress_dialog').hide();
 			});
 			
 			function init() {
@@ -76,26 +70,20 @@
 		<div id="menubar" class="ui-widget-header" >
 			<h1>Banana Tracker</h1>
 			<div id="menu">
-				<?php echo $menu; ?> 
+				<!-- Menu -->
 			</div>
 		</div>
 		
 		<div id="whiteboard">
 			<!-- Main dialog  -->			
 		</div>
-
-		<!-- Progress dialog -->
-		<!--
-		<div id="progress_dialog" title="Progress Dialog">
-			<img src="images/loading.gif" />		
-		</div>
-		-->
 		
 		<!-- Error Dialog -->
 		<div id="error_dialog" title="Error"></div>
 		
 	</body>
 </html>
+
 <script type="text/javascript">
 	disableSelection(document.body); //disable text selection on entire body of page
 	disableSelection(document.getElementById("whiteboard"));

@@ -9,7 +9,6 @@ function login_action() {
 	
 	showProgressDialog();
 	ajax_login(email, password,loginSuccessCallback);
-	
 }
 
 //TODO
@@ -48,20 +47,11 @@ function ajax_logout() {
 }
 
 function showProgressDialog(){				
-	$('#progress_dialog').show();	
-	
-	/*
-	$('#progress_dialog').dialog({
-		resizable: false,
-		draggable: false,
-		modal: true,
-		open: function(event, ui) { $(".ui-dialog-titlebar-close").hide(); }
-	});	*/
+	$('#progress_icon').show();	
 }
 
 function hideProgressDialog(){				
-	//$('#progress_dialog').dialog("destroy");
-	$('#progress_dialog').hide();	
+	$('#progress_icon').hide();	
 }
 
 function showErrorMsg(titulo,errorMessage){
@@ -131,7 +121,7 @@ function loginSuccessCallback(data){
 		canvasInit();
 
 		// remove the login window
-		switchdialog(0);
+		switchdialog(2);
 	}
 	else {
 		showErrorMsg("Error","Wrong email/password pair");
