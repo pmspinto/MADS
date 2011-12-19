@@ -103,16 +103,17 @@ function loginSuccessCallback(data){
 	
 	if (response['name'] != null) {
 		$('#welcomedialog').dialog("close");
-		email = response['email'];
-		projects = response['projs'];
-		name = response['name'];
+		vgemail = response['email'];
+		vgprojects = response['projs'];
+		vgname = response['name'];
 
-		currentProject = new Project(projects[0]);
+		console.log(vgprojects);
+		currentProject = new Project(vgprojects[0]['id']);
 
 		//load tasks
-		if(projects.length > 0){
+		if(vgprojects.length > 0){
 			$.ajaxSetup({async:false});
-			//currentProject.loadProjInfo();
+			currentProject.loadProjInfo();
 			currentProject.loadProjTasks();
 			$.ajaxSetup({async:true});
 		}

@@ -13,7 +13,7 @@ function canvasInit(tasks) {
 	
 	for(var i = 0; currentProject.tasks[i]!=null; i++) {
 		$("#whiteboard").append("<div id="+currentProject.tasks[i].id+" class='postit'> "+currentProject.tasks[i].name+"</div>");
-		$("#"+currentProject.tasks[i].id).draggable({ scroll: true , scrollSensitivity: 100, containment: 'parent' });
+		$("#"+currentProject.tasks[i].id).draggable({ scroll: false , scrollSensitivity: 100, containment: 'parent' });
 		$("#"+currentProject.tasks[i].id).css({ 'width' : width+'px' , 'height': height+'px' , 'padding' : '0.5em', 'position':'absolute', 'top':(altura/2 + currentProject.tasks[i].priority-height/2)+'px', 'left':(largura/2 + currentProject.tasks[i].effort-width/2)+'px'});
 	}
 	
