@@ -15,7 +15,7 @@
 	$idproj = $_POST['idproj'];
 	
 	
-	$query = "SELECT id,name,user,sprintdate,completiondate,idproj,idsprint,priority,effort
+	$query = "SELECT id,name,user,idproj,idsprint,sprintdone,priority,effort
 			FROM tasks
 			WHERE idproj = " . "'" . $idproj . "'";
 			

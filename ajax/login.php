@@ -9,12 +9,11 @@
 
 	require "db.php";
 	
-	//$username = $_POST['email'];
-	$username = $_REQUEST['email'];
-	//$password = $_POST['password'];
-	$password = $_REQUEST['password'];
+	$username = $_POST['email'];
+	$password = $_POST['password'];
 	
-	$query = "SELECT mail, name FROM users WHERE email = '$username' AND pass = '$password'";
+	
+	$query = "SELECT email, name FROM users WHERE email = '$username' AND pass = '$password'";
 	$result = mysql_query($query) or die('Error logging in: ' . mysql_error());
 	
 	if (mysql_num_rows($result) > 0) {

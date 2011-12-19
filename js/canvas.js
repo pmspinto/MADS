@@ -39,7 +39,7 @@ function canvasInit(tasks) {
 			new_effort = (ev.pageX - ((centerx)*factor + largura/2))/factor;
 			new_priority = (ev.pageY - ((centery)*factor + altura/2))/factor;
 			
-			new_task = new Task(0, "Set content", "mads@fe.up.pt", null , null, 2, 1, new_priority, new_effort);
+			new_task = new Task(0, "Set content", "mads@fe.up.pt", 2, 1, 0, new_priority, new_effort);
 			new_task.addTask();
 			tasks.push(new_task);
 			
@@ -87,9 +87,11 @@ function canvasInit(tasks) {
 		}
 		
 	});
-	
+		
+
 	// Mover os post-its
 	$('#whiteboard').mousedown(function(e) {
+        e.preventDefault();
 		if (supress) {
 			supress = false;
 			px = -1;
@@ -98,14 +100,12 @@ function canvasInit(tasks) {
 			move = true;
 			px = e.pageX - this.offsetLeft;
 			py = e.pageY - this.offsetTop;
-			//alert(py);
 		}
 	});
 	
 	// Move os post-its
 	$('#whiteboard').mousemove(function(ev) {
-		if (move && !supress) {
-			//alert('here');
+		if (move && !supress && altura != ev.pageY+1) {
 			for(var i = 0; tasks[i]!=null; i++) {
 				startpos = $("#"+tasks[i].id).position();
 				$("#"+tasks[i].id).css({"left": (startpos.left + ev.pageX - this.offsetLeft - px) + "px",
@@ -123,32 +123,37 @@ function canvasInit(tasks) {
 		move = false;
 	});
 	
-
+	$('#whiteboard').mouseout(function(ev) {
+		move = false;
+	});
+	
 	// EVENTOS DOS POST ITs
 	function bind_mouse_events(task_id){
 		
-		$('#'+task_id).mousedown(function(e) {
-			supress = true;
-			px = -1;
-		});
-		
-		$('#'+task_id).mouseup(function(e) {
-			// update locally
-			var j = get_task_index(this.id);
+		for (var i = 0; tasks[i]!=null; i++) {
+			$('#'+tasks[i].id).mousedown(function(e) {
+				supress = true;
+				px = -1;
+			});
 			
-			endpos = $('#'+this.id).position();
+			$('#'+task_id).mouseup(function(e) {
+				// update locally
+				var j = get_task_index(this.id);
+				
+				endpos = $('#'+this.id).position();
+				
+				tasks[j].effort += (endpos.left - ((tasks[j].effort-centerx)*factor + largura/2 - factor*width/2))/factor;
+				tasks[j].priority += (endpos.top - ((tasks[j].priority-centery)*factor + altura/2 - factor*height/2))/factor;
+				// update priority & effort in DB
+				tasks[j].saveTask();
+			});
 			
-			tasks[j].effort += (endpos.left - ((tasks[j].effort-centerx)*factor + largura/2 - factor*width/2))/factor;
-			tasks[j].priority += (endpos.top - ((tasks[j].priority-centery)*factor + altura/2 - factor*height/2))/factor;
-			// update priority & effort in DB
-			tasks[j].saveTask();
-		});
-		
-		// Define double click event to edit the text in the task
-		$('#'+task_id).editable('ajax/updateTaskName.php',{
-				event: "dblclick",
-				style: "opacity: 0.5;"
-		});
+			// Define double click event to edit the text in the task
+			$('#'+task_id).editable('ajax/updateTaskName.php',{
+					event: "dblclick",
+					style: "opacity: 0.5;"
+			});
+		}
 	}
 	
 	

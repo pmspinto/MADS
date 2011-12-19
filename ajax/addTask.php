@@ -10,14 +10,13 @@
 	
 	$name = $_POST['name'];
 	$user = $_POST['user'];
-	$sprintdate = $_POST['sprintdate'];
-	$completiondate = $_POST['completiondate'];
 	$idproj = $_POST['idproj'];
 	$idsprint = $_POST['idsprint'];
+	$sprintdone = $_POST['sprintdone'];
 	$priority = $_POST['priority'];
 	$effort = $_POST['effort'];
 	
-	$query = "INSERT INTO tasks (id,name,user,sprintdate,completiondate,idproj,idsprint,priority,effort) VALUES (NULL,'" . $name . "','" . $user . "'," . $sprintdate . "," . $completiondate . ",".$idproj . "," .$idsprint . ",".$priority . ",".$effort . ")";
+	$query = "INSERT INTO tasks (id,name,user,idproj,idsprint,sprintdone,priority,effort) VALUES (NULL,'" . $name . "','" . $user . "',".$idproj . "," .$idsprint . ",".$sprintdone.",".$priority . ",".$effort . ")";
 			
 	$result = mysql_query($query) or die('Error getting tasks: ' . mysql_error());
 	$id = mysql_insert_id();
