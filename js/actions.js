@@ -7,8 +7,11 @@ function login_action() {
 	var email = $('#loginemail').val();
 	var password = $('#loginpassword').val();
 	
-	showProgressDialog();
-	ajax_login(email, password,loginSuccessCallback);
+	switchdialog(2);
+	
+	//showProgressDialog();
+	//ajax_login(email, password,loginSuccessCallback);
+	
 	
 }
 
