@@ -13,6 +13,7 @@ function parseTasks(json, proj) {
 		t = new Task(id,name,user,idproj,idsprint,sprintdone,priority,effort);
 		proj.tasks.push(t);
 	}
+	
 }
 
 function Project(id) {
@@ -36,8 +37,6 @@ function Project(id) {
 				console.log('error in getTasksProject');
 			}
 		});
-		
-		return this.tasks;
 	}
 	
 }
