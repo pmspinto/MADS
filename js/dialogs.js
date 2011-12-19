@@ -53,12 +53,15 @@ function switchdialog(newState) {
 function welcomedialog() {
 	$("#whiteboard").html( '<div id="welcomedialog" title="Welcome to Banana Tracker!">'+
 								'<div id="loginleft">'+
-									'Coisas bonitas deste lado, assim como uma imagem e texto. mas se isto for muito longo acho que merda no entanto vamos testar. '+
-									'mas se isto for muito longo acho que merda no entanto vamos testar. '+
-									'mas se isto for muito longo acho que merda no entanto vamos testar. '+
-									'mas se isto for muito longo acho que merda no entanto vamos testar. '+
-									'mas se isto for muito longo acho que merda no entanto vamos testar. '+
-									'mas se isto for muito longo acho que merda no entanto vamos testar.'+
+									'<div id="post_it">'+
+										'<div id = "post_it_text">' +
+											'<p>Existe duas variaveis importantes num projeto: Esforco e Prioridade</p>' +
+											'<p>O problema destas variaveis e a ausencia de uma representação visual pelo que normalmente vem associadas de um numero</p>' +
+											'<p>Para resolver este problema oferecemos: Um quadro e post its.</p>' +
+											'<p>No quadro podem ser adicionados post its e a sua organização representa o esforço e as prioridades de cada tarefa </p>' +
+											'<p>Quanto mais para a direita no quadro um post it estiver mais esforço está associado, quanto mais para cima maior a prioridade</p>' +
+										'</div>' +
+									'</div>' +
 								'</div>'+
 								'<div id="loginright">'+
 									'<form action="javascript: login_action();" class="loginform">'+
@@ -107,8 +110,7 @@ function welcomedialog() {
 									'</form>'+
 								'</div>'+
 							'</div>	');
-
-	
+							
 	$('#auth_button').button();
 	$('#register_button').button();
 	

@@ -4,7 +4,22 @@
 
 #loginleft {
 	width: 45%;
+	height: 100%;
 	float: left;
+}
+
+#post_it {
+	width: 100%;
+	height: 100%;
+	float: center;
+	text-align: center;
+	background-image: url(images/postit.svg);
+}
+
+#post_it_text {
+	padding-top: 1%;
+	padding-left: 16%;
+	padding-right: 16%;
 }
 
 #loginright{

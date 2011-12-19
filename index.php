@@ -2,15 +2,8 @@
 	session_start();
 	
 	$menu = '';
-	//if (isset($_SESSION['mail'])) { 
-		$right_menu = '<button id="logout_button" onclick="logout_action();">Logout</button>';
-		$left_menu = '<select id="projectSelector" onchange="projectChange();">
-					<option value="" disabled="disabled">Jump to a project...</option>
-					<option value="" disabled="disabled">---</option>
-			</select>
-
-			<button id="project_button" onclick="launchProjectMenu();">Project</button>
-			<button id="stats_button">Stats</button>';
+	//if (isset($_SESSION['usermail'])) { 
+		$menu = 'lalalala';
 	//}
 ?>
 
@@ -24,7 +17,8 @@
 		<link type="text/css" href="css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
 		<link type="text/css" href="css/structstyle.css" rel="stylesheet" />
 		<link type="text/css" href="css/login.css" rel="stylesheet" />
-		<link type="text/css" href="css/project_menu.css" rel="stylesheet" />		
+		<link type="text/css" href="css/project_menu.css" rel="stylesheet" />
+		
 	
 		<script type="text/javascript" src="js/jquery/jquery-1.6.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
@@ -34,7 +28,7 @@
 		<script type="text/javascript" src="js/dialogs.js"></script>
 		<script type="text/javascript" src="js/actions.js"></script>
 		
-		<script type="text/javascript" src="js/Config.js"></script> 
+	    	<script type="text/javascript" src="js/Config.js"></script> 
 		<script type="text/javascript" src="js/selections.js"></script>
 		<script type="text/javascript" src="js/canvas.js"></script>
 		<script type="text/javascript" src="js/task.js"></script>
@@ -67,11 +61,7 @@
 			
 			function init() {
 				$('#whiteboard').width(largura);
-				$('#whiteboard').height(altura);				
-				
-				$('#logout_button').button();
-				$('#project_button').button();
-				$('#stats_button').button();				
+				$('#whiteboard').height(altura);
 				
 				setdialog();
 			}
@@ -80,11 +70,8 @@
 	<body>
 		<div id="menubar" class="ui-widget-header" >
 			<h1>Banana Tracker</h1>
-			<div id="menu_left">
-				<?php echo $left_menu ?>
-			</div>
-			<div id="menu_right">
-				<?php echo $right_menu; ?>
+			<div id="menu">
+				<?php echo $menu; ?> 
 			</div>
 		</div>
 		
@@ -104,9 +91,9 @@
 </html>
 <script type="text/javascript">
 	disableSelection(document.body); //disable text selection on entire body of page
-	disableSelection(document.getElementById("whiteboard"))
+	disableSelection(document.getElementById("whiteboard"));
 	
-	disableSelection(document.getElementById("menubar"))
+	disableSelection(document.getElementById("menubar"));
 	
 	var postits = document.getElementsByClassName("postit");
 	for (var i = 0; i < postits.length; i++)

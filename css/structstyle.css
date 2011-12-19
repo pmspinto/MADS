@@ -29,16 +29,12 @@ body {
 	padding-left: 20px;
 	font-size: 14px;
 	color: #555555;
-	
 }
 
-#menu_left {
-	float: left;
-	margin-left: 20px;
-}
-
-#menu_right {
-	float:right;
+#menu {
+	position: relative;
+	float: right;
+	z-index: 10;
 	margin-right: 20px;
 	font-size: 12px;
 }
@@ -56,5 +52,5 @@ body {
 }
 
 .postit {
-	background-image: url(images/postit_done.svg);
+	background-image: url(images/postit.svg);
 }
