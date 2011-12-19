@@ -195,7 +195,8 @@ function project() {
 	$("#projectdialog").dialog({ width: largura-200, 
 							  height: altura-200, 
 							  resizable: false, 
-							  closeOnEscape: false
+							  closeOnEscape: false,
+							  close: function(event, ui) { canvasInit();}
 							});
 }
 
