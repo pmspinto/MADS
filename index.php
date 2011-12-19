@@ -2,9 +2,9 @@
 	session_start();
 	
 	$menu = '';
-	if (isset($_SESSION['usermail'])) { 
-		$menu = '<button id="logout_button" onclick="logout_action();">Logout</button>';
-	}
+	//if (isset($_SESSION['usermail'])) { 
+		$menu = 'lalalala';
+	//}
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +22,7 @@
 	
 		<script type="text/javascript" src="js/jquery/jquery-1.6.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
+		<script type="text/javascript" src="js/jquery/jquery.jeditable.js"></script>
 		<script type="text/javascript" src="js/graphs/highcharts.js"></script>
 		<script type="text/javascript" src="js/graphs/graphs.js"></script>
 		
@@ -91,9 +92,9 @@
 </html>
 <script type="text/javascript">
 	disableSelection(document.body); //disable text selection on entire body of page
-	disableSelection(document.getElementById("whiteboard"))
+	disableSelection(document.getElementById("whiteboard"));
 	
-	disableSelection(document.getElementById("menubar"))
+	disableSelection(document.getElementById("menubar"));
 	
 	var postits = document.getElementsByClassName("postit");
 	for (var i = 0; i < postits.length; i++)

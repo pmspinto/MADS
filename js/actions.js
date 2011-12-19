@@ -1,9 +1,13 @@
+function trim(stringToTrim) {
+	return stringToTrim.replace(/^\s+|\s+$/g,"");
+}
+
 function login_action() {
 	
 	var email = $('#loginemail').val();
 	var password = $('#loginpassword').val();
 	
-	//showProgressDialog();
+	showProgressDialog();
 	ajax_login(email, password,loginSuccessCallback);
 	
 }
@@ -52,6 +56,10 @@ function showProgressDialog(){
 	});	
 }
 
+function hideProgressDialog(){				
+	$('#progress_dialog').dialog("destroy");	
+}
+
 function showErrorMsg(titulo,errorMessage){
 	
 	document.getElementById('error_dialog').innerHTML = errorMessage;
@@ -83,6 +91,7 @@ function register_action() {
 	}else showErrorMsg("","Passwords do not match or you have blank fields");
 }
 
+
 function register_ajax(email, name, password, successCallback){
 	$.post(
 	Config.server + "ajax/register.php",
@@ -92,10 +101,6 @@ function register_ajax(email, name, password, successCallback){
 		password: password 
 	},
 	successCallback);   
-}
-
-function trim(stringToTrim) {
-	return stringToTrim.replace(/^\s+|\s+$/g,"");
 }
 
 // function called when the login ajax request is successful
@@ -127,6 +132,7 @@ function loginSuccessCallback(data){
 	
 
 	// remove progress dialog
+	hideProgressDialog();
 }
 
 // function called when the register ajax request is successful
