@@ -48,16 +48,20 @@ function ajax_logout() {
 }
 
 function showProgressDialog(){				
+	$('#progress_dialog').show();	
+	
+	/*
 	$('#progress_dialog').dialog({
 		resizable: false,
 		draggable: false,
 		modal: true,
 		open: function(event, ui) { $(".ui-dialog-titlebar-close").hide(); }
-	});	
+	});	*/
 }
 
 function hideProgressDialog(){				
-	$('#progress_dialog').dialog("destroy");	
+	//$('#progress_dialog').dialog("destroy");
+	$('#progress_dialog').hide();	
 }
 
 function showErrorMsg(titulo,errorMessage){

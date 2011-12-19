@@ -29,7 +29,7 @@
 		<script type="text/javascript" src="js/dialogs.js"></script>
 		<script type="text/javascript" src="js/actions.js"></script>
 		
-	    	<script type="text/javascript" src="js/Config.js"></script> 
+		<script type="text/javascript" src="js/Config.js"></script> 
 		<script type="text/javascript" src="js/selections.js"></script>
 		<script type="text/javascript" src="js/canvas.js"></script>
 		<script type="text/javascript" src="js/task.js"></script>
@@ -52,17 +52,17 @@
 				$(window).bind('resize', function() {
 				largura = $(window).width();
 				altura = $(window).height();
-					
+				
 				init();
 			});
 				
 			init();
-				
+			$('#progress_dialog').hide();
 			});
 			
 			function init() {
 				$('#whiteboard').width(largura);
-				$('#whiteboard').height(altura);
+				$('#whiteboard').height(altura);	
 				
 				setdialog();
 			}
@@ -81,9 +81,11 @@
 		</div>
 
 		<!-- Progress dialog -->
+		<!--
 		<div id="progress_dialog" title="Progress Dialog">
 			<img src="images/loading.gif" />		
 		</div>
+		-->
 		
 		<!-- Error Dialog -->
 		<div id="error_dialog" title="Error"></div>

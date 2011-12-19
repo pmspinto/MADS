@@ -43,10 +43,6 @@ body {
 	background-color: #eeeeee;
 }
 
-#progress_dialog {
-	display: none;
-}
-
 #error_dialog {
 	display: none;
 }
