@@ -18,7 +18,7 @@ function canvasInit(tasks) {
 									'<img id="close_'+currentProject.tasks[i].id + '" src="js/delete.png" height="15" width="15" style="float:right; display:none"/>' +
 									currentProject.tasks[i].name +
 								"</div>");
-		$("#"+currentProject.tasks[i].id).draggable({ scroll: true , scrollSensitivity: 100, containment: 'parent' });
+		$("#"+currentProject.tasks[i].id).draggable({ scroll: false , scrollSensitivity: 100, containment: 'parent' });
 		$("#"+currentProject.tasks[i].id).css({ 'width' : width+'px' , 'height': height+'px' , 'padding' : '0.5em', 'position':'absolute', 'top':(altura/2 + currentProject.tasks[i].priority-height/2)+'px', 'left':(largura/2 + currentProject.tasks[i].effort-width/2)+'px'});
 	}
 	
@@ -36,10 +36,13 @@ function canvasInit(tasks) {
 	$('#whiteboard').dblclick(function(ev) {
 		// É necessário pedir a' BD que crie uma nova task para atribuir um id
 		// Da-se um id dummy ao construtor que depois é actualizado no addTask()
+		// TODO - NECESSARIO DESCOBRIR:
 		// NECESSARIO DESCOBRIR:
 		// User, id do projecto, id do sprint e effort e priority dependendo de onde foi clickado
+		
 		new_effort = centerx + (ev.pageX - largura/2)/factor;
 		new_priority = centery + (ev.pageY - altura/2)/factor;
+				
 		new_task = new Task(0, "Set content", "mads@fe.up.pt", 2, 1, 0, new_priority, new_effort);
 		new_task.addTask();
 		currentProject.tasks.push(new_task);
@@ -62,8 +65,10 @@ function canvasInit(tasks) {
 				'font-size': factor*100+'%',
 				'padding' : '0.5em',
 				'position':'absolute',
-				'top':(altura/2 + new_task.priority-height/2)+'px',
-				'left':(largura/2 + new_task.effort-width/2)+'px'});
+				'left': ((new_effort-centerx)*factor + largura/2 - factor*width/2)+'px',
+				'top': ((new_priority-centery)*factor + altura/2 - factor*width/2)+'px'});
+	
+		console.log(new_effort + " " + new_priority);
 	
 		// Set up the mouse events on the new TASK
 		bind_mouse_events(new_task.id);

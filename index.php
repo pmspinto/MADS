@@ -1,10 +1,5 @@
 <?php
 	session_start();
-	
-	$menu = '';
-	//if (isset($_SESSION['usermail'])) { 
-		$menu = 'lalalala';
-	//}
 ?>
 
 <!DOCTYPE html>
@@ -17,8 +12,7 @@
 		<link type="text/css" href="css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />
 		<link type="text/css" href="css/structstyle.css" rel="stylesheet" />
 		<link type="text/css" href="css/login.css" rel="stylesheet" />
-		<link type="text/css" href="css/project_menu.css" rel="stylesheet" />
-		
+		<link type="text/css" href="css/project_menu.css" rel="stylesheet" />		
 	
 		<script type="text/javascript" src="js/jquery/jquery-1.6.2.min.js"></script>
 		<script type="text/javascript" src="js/jquery/jquery-ui-1.8.16.custom.min.js"></script>
@@ -40,9 +34,9 @@
 			var altura;
 			var state;
 			
-			var email;
-			var name;
-			var projects;
+			var vgemail;
+			var vgname;
+			var vgprojects;
 			
 			var currentProject = new Project();
 			
@@ -50,25 +44,24 @@
 				//global vars
 				largura = $(window).width();
 				altura = $(window).height();
-				state = 1;
+				state = 0;
 
 				//manage globals when resizing
 				$(window).bind('resize', function() {
-				largura = $(window).width();
-				altura = $(window).height();
+					largura = $(window).width();
+					altura = $(window).height();
+					
+					init();
+				});
 				
 				init();
-			});
-				
-			init();
-			$('#progress_dialog').hide();
 			});
 			
 			function init() {
 				$('#whiteboard').width(largura);
 				$('#whiteboard').height(altura);	
 				
-				setdialog();
+				switchdialog(1);
 			}
 		</script>
 	</head>
@@ -76,26 +69,22 @@
 		<div id="menubar" class="ui-widget-header" >
 			<h1>Banana Tracker</h1>
 			<div id="menu">
-				<?php echo $menu; ?> 
+				<!-- Menu -->
+			</div>
+			<div id="menu_canvas">
 			</div>
 		</div>
 		
 		<div id="whiteboard">
 			<!-- Main dialog  -->			
 		</div>
-
-		<!-- Progress dialog -->
-		<!--
-		<div id="progress_dialog" title="Progress Dialog">
-			<img src="images/loading.gif" />		
-		</div>
-		-->
 		
 		<!-- Error Dialog -->
 		<div id="error_dialog" title="Error"></div>
 		
 	</body>
 </html>
+
 <script type="text/javascript">
 	disableSelection(document.body); //disable text selection on entire body of page
 	disableSelection(document.getElementById("whiteboard"));
