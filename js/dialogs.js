@@ -77,7 +77,7 @@ function welcomedialog() {
 									'			<input type="password" name="password" id="loginpassword"/>'+
 									'		</li>'+
 									'		<li>'+
-									'			<button id="auth_button">Login</button>'+
+									'			<button id="auth_button">Login</button> <img id="progress_dialog" src="css/images/loading.gif" /></div>'+
 									'		</li>'+
 									'	</ol>'+
 									'</fieldset>'+
