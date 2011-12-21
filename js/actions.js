@@ -143,3 +143,16 @@ function registerSuccessCallback(data){
 		showErrorMsg("Error",data);
 	}
 }
+
+// function to delete a task
+function deleteTask(task_id){
+	$.ajax({
+  		url: "ajax/delTask.php",
+		type: 'POST',
+		data: { id: task_id },
+  		success: function(){
+			// Show popup telling the user it went well ??
+    		console.log("DELETE SUCCESSFULL");
+  		}
+	});
+}

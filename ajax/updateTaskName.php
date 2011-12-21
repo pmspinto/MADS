@@ -11,7 +11,9 @@
 	$id = $_POST['id'];
 	$value = $_POST['value'];
 	
-	$query = "UPDATE tasks SET name='".$value."' where id=".$id;
+	$arr = explode('_',$id);
+	
+	$query = "UPDATE tasks SET name='".$value."' where id=".$arr[1];
 	$result = mysql_query($query) or die('Error updating task: ' . mysql_error());
 
 	echo $value;
