@@ -23,6 +23,7 @@ function Project(id) {
     }
     
     this.loadProjTasks = function() {
+
         $.ajax({
             type: 'POST',
             url: Config.server + 'ajax/getTasksProject.php',
