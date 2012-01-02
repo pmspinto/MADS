@@ -6,27 +6,20 @@
 	width: 45%;
 	height: 100%;
 	float: left;
-}
-
-#post_it {
-	width: 100%;
-	height: 100%;
-	float: center;
 	text-align: center;
-	background-image: url(images/postit.svg);
 }
 
-#post_it_text {
-	padding-top: 1%;
-	padding-left: 16%;
-	padding-right: 16%;
+#intro{
+	padding-left: 10%;
+	padding-right: 10%;
 }
 
-#progress_dialog
+#intro img{
+	width: 90%;
+}
 
-#loginright{
-	width: 45%;
-	float: right;
+#intro img.graph {
+	width: 35%;
 }
 
 form.loginform fieldset {

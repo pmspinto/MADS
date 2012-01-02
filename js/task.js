@@ -9,6 +9,7 @@ function Task(id,name,user,idproj,idsprint,sprintdone,priority,effort) {
 	this.sprintdone = sprintdone;
 	this.priority = priority;
 	this.effort = effort;
+	this.drawn = false;
 		
 	this.addTask = function() {
 		var new_id;

@@ -8,3 +8,4 @@ function Config(){
 // every path shoudl be built this way:
 // Config.server + <relative_path>
 Config.server = "http://paginas.fe.up.pt/~ei07073/MADS/";
+

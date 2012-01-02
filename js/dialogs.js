@@ -32,18 +32,14 @@ function switchdialog(newState) {
 function welcomedialog() {
 	$("#whiteboard").html( '<div id="welcomedialog" title="Welcome to Banana Tracker!">'+
 								'<div id="loginleft">'+
-									'<div id="post_it">'+
-										'<div id = "post_it_text">' +
-											'<p>Existe duas variaveis importantes num projeto: Esforco e Prioridade</p>' +
-											'<p>O problema destas variaveis e a ausencia de uma representação visual pelo que normalmente vem associadas de um numero</p>' +
-											'<p>Para resolver este problema oferecemos: Um quadro e post its.</p>' +
-											'<p>No quadro podem ser adicionados post its e a sua organização representa o esforço e as prioridades de cada tarefa </p>' +
-											'<p>Quanto mais para a direita no quadro um post it estiver mais esforço está associado, quanto mais para cima maior a prioridade</p>' +
+									'<div id="intro">'+
+										'<img src="css/images/logo.png" alt="Banana Tracker Logo"/>' +
+										'<p> In Banana Tracker we provide tools to organize your tasks. You can sort your tasks in a bidimensional board. </p>' +
+										'<img src="css/images/graph.png" class="graph" alt="Effort and Priority Graph"/>' +
 										'</div>' +
-									'</div>' +
 								'</div>'+
 								'<div id="loginright">'+
-									'<form action="javascript: login_action();" class="loginform">'+
+									'<form id="loginform" action="javascript: login_action();" class="loginform">'+
 									'<fieldset>'+
 									'	<legend>Login</legend>'+
 									'	<ol>'+
@@ -56,7 +52,7 @@ function welcomedialog() {
 									'			<input type="password" name="password" id="loginpassword"/>'+
 									'		</li>'+
 									'		<li>'+
-									'			<button id="auth_button">Login</button> <img id="progress_icon" src="css/images/loading.gif" /></div>'+
+									'			<button form="loginform" type="submit" id="auth_button">Login</button> <img id="progress_icon" src="css/images/loading.gif" /></div>'+
 									'		</li>'+
 									'	</ol>'+
 									'</fieldset>'+
@@ -105,40 +101,18 @@ function welcomedialog() {
 								});
 }
 function project() {
-	projectMenu = '<div id="projectmenu"><p>'+vgname+' </p><p> </p>';
-	
-	for(var i = 0; i<vgprojects.length; i++) {
-		console.log(vgprojects[i]);
-		if(vgprojects[i]['id'] == currentProject.id)
-			projectMenu += '<div id="projectmenuselected"><p>'+vgprojects[i]['name']+'</p></div>';
-		else
-			projectMenu += '<p>'+vgprojects[i]['name']+'</p>'
-	}					
-	projectMenu += '</div>';
-
+	var menu = projectmenu();
 	$("#whiteboard").html( '<div id="projectdialog" title="Projects">'+
-								projectMenu+
+								'<div id="projectmenu">'+
+								'</div>'+
 								'<div id="projectcontent">'+
 									'<button id="proj_info">Project Info</button>'+
 									'<button id="proj_burndown">Burndown Chart</button>'+
 									'<button id="proj_velocity">Velocity Chart</button>'+
 									'<div id="projectinnercontent">'+
 										'<div id="projectinfo">'+
-											'<h2>Project info</h2>'+
-											'<p>Name: </p>'+
-											'<input type="text" name="projectname" value="Mads2011"/>'+
-											'<p>Description: </p>'+
-											'<textarea rows="5" cols="30">'+
-												'Our project in the course of Agile Software development'+
-											'</textarea><br/>'+
-											'<button id="saveproject">Save</button>'+
 										'</div>'+
 										'<div id="membersinfo">'+
-											'<h2>Members info</h2>'+
-											'<p><img src="css/images/remove_user.png" />Jack Daniels</p>'+
-											'<p><img src="css/images/remove_user.png" />Johnny Walker</p>'+
-											'<p><img src="css/images/remove_user.png" />William Grant</p>'+
-											'<button id="newmember">Add member</button>'+
 										'</div>'+
 										'<div id="projectchanges">'+
 											'<h2>Last Changes</h2>'+
@@ -159,21 +133,8 @@ function project() {
 	$('#proj_info').click(function(e) {
 		$('#projectinnercontent').hide();
 		$('#projectinnercontent').html('<div id="projectinfo">'+
-											'<h2>Project info</h2>'+
-											'<p>Name: </p>'+
-											'<input type="text" name="projectname" value="Mads2011"/>'+
-											'<p>Description: </p>'+
-											'<textarea rows="5" cols="30">'+
-												'Our project in the course of Agile Software development'+
-											'</textarea><br/>'+
-											'<button id="saveproject">Save</button>'+
 										'</div>'+
 										'<div id="membersinfo">'+
-											'<h2>Members info</h2>'+
-											'<p><img src="css/images/remove_user.png" />Jack Daniels</p>'+
-											'<p><img src="css/images/remove_user.png" />Johnny Walker</p>'+
-											'<p><img src="css/images/remove_user.png" />William Grant</p>'+
-											'<button id="newmember">Add member</button>'+
 										'</div>'+
 										'<div id="projectchanges">'+
 											'<h2>Last Changes</h2>'+
@@ -184,7 +145,7 @@ function project() {
 		$('#saveproject').button();
 		$('#newmember').button();
 		$('#projectinnercontent').show('slow');	
-		
+		projectinfo();
 	});
 	
 	$('#proj_burndown').click(function(e) {
@@ -197,30 +158,14 @@ function project() {
 		Graph('Mads2011', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], [ 10, 11, 11, 8, 9, 12, 9, 7, 11, 10, 11, 10], 'Sprint', 'Effort points', 'Velocity', 'velocity_container');
 	});
 	
-	$('#menu').html('<button id="logout_button" onclick="logout_action();">Logout</button>');
-	$('#menu_canvas').html(
-		'<button id="sprint_number" onclick="next_sprint();">' +
-			1 +
-		'</button>' +
-		'<button id="next_sprint" onclick="next_sprint();">' +
-			'<img class="next_sprint_icon" src="css/images/next_sprint.png" align="absmiddle">' +
-		'</button>' +
-		'<button id="filter_done" onclick="filter_done();">' +
-			'<img class="postit_icon" src="css/images/done_postit_icon.png" align="absmiddle">' +
-			'Done' +
-		'</button>' +
-		'<button id="filter_sprint" onclick="filter_sprint();">' +
-			'<img class="postit_icon" src="css/images/sprint_postit_icon.png" align="absmiddle">' +
-			'Sprint' +
-		'</button>');
-		
-	$('#logout_button').button();
-	$('#filter_done').button();
-	$('#filter_sprint').button();
-	$('#next_sprint').button();
+	//project info
+	updatedialog()
 	
-	$('#sprint_number').button();
-	$('#sprint_number').attr("disabled", true);
+	//top menu
+	$('#menu').html('<button id="logout_button" onclick="logout_action();">Logout</button>');
+	$('#logout_button').button();
+	
+	canvasmenu();
 	
 	$("#projectdialog").dialog({ width: largura-200, 
 							  height: altura-200, 
@@ -230,3 +175,74 @@ function project() {
 							});
 }
 
+function updatedialog() {
+	projectinfo();
+	projectmenu();
+	projectusers();
+}
+
+function projectusers() {
+	var userslist = '<h2>Members info</h2>';
+	
+	for(var i = 0; i<currentProject.users.length; i++) {
+		userslist += '<p><img src="css/images/remove_user.png" />'+currentProject.users[i].name+'</p>'
+	}
+		
+	userslist += '<button id="newmember">Add member</button>';
+	$('#membersinfo').html(userslist);
+}
+
+function projectinfo() {
+	$('#projectinfo').html(
+		'<h2>Project info</h2>'+
+		'<p>Name: </p>'+
+		'<input type="text" name="projectname" value="'+currentProject.name+'"/>'+
+		'<p>Description: </p>'+
+		'<textarea rows="5" cols="30">'+
+			currentProject.description+
+		'</textarea><br/>'+
+		'<button id="saveproject">Save</button>');
+}
+
+function projectmenu() {
+	newmenu = '';
+	for(var i = 0; i<vgprojects.length; i++) {
+		//console.log(vgprojects[i]);
+		if(vgprojects[i]['id'] == currentProject.id)
+			newmenu += '<div id="projectmenuselected"><p>'+vgprojects[i]['name']+'</p></div>';
+		else
+			newmenu += '<div class="projectmenuitem" id="'+vgprojects[i]['id']+'"> <p>'+vgprojects[i]['name']+'</p></div>'
+	}
+	$('#projectmenu').html(newmenu);
+	$('.projectmenuitem').click(function() {
+		currentProject = new Project($(this).attr("id"));
+		currentProject.loadProjTasks();
+		currentProject.loadProjInfo();
+	});
+}
+
+function canvasmenu() {
+	$('#menu_canvas').html(
+		'<form name="menuform">'+
+		'<button id="sprint_number" onclick="next_sprint();">' +
+			1 +
+		'</button>' +
+		'<button id="next_sprint" onclick="next_sprint();">' +
+			'<img class="next_sprint_icon" src="css/images/next_sprint.png" align="absmiddle">' +
+		'</button>' +
+		
+		'<label for="filter_done"><img class="postit_icon" src="css/images/done_postit_icon.png" align="absmiddle">Done</label>' +
+		'<input type="checkbox" id="filter_done" onclick="javascript: filterByDone();"/>'+
+		
+		'<button id="filter_sprint" onclick="filter_sprint();">' +
+			'<img class="postit_icon" src="css/images/sprint_postit_icon.png" align="absmiddle">' +
+			'Sprint' +
+		'</button>'+
+		'</form>');
+		
+	$('#filter_done').button();
+	$('#filter_sprint').button();
+	$('#next_sprint').button();
+	$('#sprint_number').button();
+	$('#sprint_number').attr("disabled", true);
+}
