@@ -6,25 +6,15 @@
 */
 
 function setdialog() {
-	switch(state) {
-		case 1:
-			welcomedialog();
-			break;
-		case 2:
-			project();
-			break;
-	}
+	if(state == 1)
+		welcomedialog();
+	else
+		project();
 }
 
 function switchdialog(newState) {
-	switch(state) {
-		case 1:
-			$('#welcomedialog').dialog("destroy");
-			break;
-		case 2:
-			$('#projectdialog').dialog("destroy");
-			break;
-	}
+	if(state == 1) 
+		$('#welcomedialog').dialog("destroy");
 	state = newState;
 	setdialog();
 }
@@ -114,18 +104,7 @@ function project() {
 									'<button id="proj_info">Project Info</button>'+
 									'<button id="proj_burndown">Burndown Chart</button>'+
 									'<button id="proj_velocity">Velocity Chart</button>'+
-									
 									'<div id="projectinnercontent">'+
-										'<div id="projectinfo">'+
-										'</div>'+
-										'<div id="membersinfo">'+
-										'</div>'+
-										'<div id="projectchanges">'+
-											'<h2>Last Changes</h2>'+
-											'<p><img src="css/images/post_icon.png" /><span>19 Dec, 2011</span> - New Sprint</p>'+
-											'<p><img src="css/images/post_icon.png" /><span>17 Dec, 2011</span> - Move tasks in whiteboard - done!</p>'+
-											'<p><img src="css/images/post_icon.png" /><span>16 Dec, 2011</span> - Burndown chart - Added</p>'+
-										'</div>'+
 									'</div>'+
 								'</div>'+
 								'<div id="userlist" title="Users">'+
@@ -136,36 +115,28 @@ function project() {
 	$('#proj_velocity').button();
 	$('#newproject').button();
 	
+	if(state == 2)
+		projectboard();
+	if(state == 3)
+		burndown();
+	if(state == 4)
+		velocity();
+	
 	$('#proj_info').click(function(e) {
-		$('#projectinnercontent').hide();
-		$('#projectinnercontent').html('<div id="projectinfo">'+
-										'</div>'+
-										'<div id="membersinfo">'+
-										'</div>'+
-										'<div id="projectchanges">'+
-											'<h2>Last Changes</h2>'+
-											'<p><img src="css/images/post_icon.png" /><span>19 Dec, 2011</span> - New Sprint</p>'+
-											'<p><img src="css/images/post_icon.png" /><span>17 Dec, 2011</span> - Move tasks in whiteboard - done!</p>'+
-											'<p><img src="css/images/post_icon.png" /><span>16 Dec, 2011</span> - Burndown chart - Added</p>'+
-										'</div>');
-		$('#projectinnercontent').show('slow');	
+		state = 2;
 		updatedialog();
 	});
 	
 	$('#proj_burndown').click(function(e) {
-		$('#projectinnercontent').html('<div id="burndown_container" style="width: 800px; height: 390px; margin: 0 auto">cenas</div>');
-		var sprints = currentProject.getSprints();
-		Graph(currentProject.name, sprints['sprint'], sprints['effort'], sprints['annotations'], 'Sprint', 'Effort points left', 'Burndown', 'burndown_container');
+		state = 3;
+		updatedialog();
 	});
 	
 	$('#proj_velocity').click(function(e) {
-		$('#projectinnercontent').html('<div id="velocity_container" style="width: 800px; height: 390px; margin: 0 auto"></div>');
-		var velocity = currentProject.getVelocity();
-		VelGraph(currentProject.name, velocity['sprint'], velocity['velocity'],'Sprint', 'Effort points', 'Velocity', 'velocity_container');
+		state = 4;
+		updatedialog();
 	});
 	
-	//project info
-	updatedialog()
 	
 	//top menu
 	$('#menu').html('<button id="logout_button" onclick="logout_action();">Logout</button>');
@@ -180,8 +151,41 @@ function project() {
 }
 
 function updatedialog() {
-	projectinfo();
+	if(state == 2) {
+		projectboard();
+	} else if(state == 3)
+		burndown();
+	else 
+		velocity();
 	projectmenu();
+}
+
+function velocity() {
+	$('#projectinnercontent').html('<div id="velocity_container" style="width: 800px; height: 390px; margin: 0 auto"></div>');
+	var velocity = currentProject.getVelocity();
+	VelGraph(currentProject.name, velocity['sprint'], velocity['velocity'],'Sprint', 'Effort points', 'Velocity', 'velocity_container');
+}
+
+function burndown() {
+	$('#projectinnercontent').html('<div id="burndown_container" style="width: 800px; height: 390px; margin: 0 auto">cenas</div>');
+	var sprints = currentProject.getSprints();
+	Graph(currentProject.name, sprints['sprint'], sprints['effort'], sprints['annotations'], 'Sprint', 'Effort points left', 'Burndown', 'burndown_container');
+}
+
+function projectboard() {
+	$('#projectinnercontent').hide();
+	$('#projectinnercontent').html('<div id="projectinfo">'+
+									'</div>'+
+									'<div id="membersinfo">'+
+									'</div>'+
+									'<div id="projectchanges">'+
+										'<h2>Last Changes</h2>'+
+										'<p><img src="css/images/post_icon.png" /><span>19 Dec, 2011</span> - New Sprint</p>'+
+										'<p><img src="css/images/post_icon.png" /><span>17 Dec, 2011</span> - Move tasks in whiteboard - done!</p>'+
+										'<p><img src="css/images/post_icon.png" /><span>16 Dec, 2011</span> - Burndown chart - Added</p>'+
+									'</div>');
+	$('#projectinnercontent').show('slow');	
+	projectinfo();
 	projectusers();
 }
 
