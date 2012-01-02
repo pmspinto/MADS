@@ -56,6 +56,10 @@ body {
 	background-image: url(images/postit.svg);
 }
 
+.postitdone {
+	background-image: url(images/postit_done.svg);
+}
+
 /* PROJECT MENU */
 
 #projectmenu {
