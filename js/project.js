@@ -1,4 +1,8 @@
 function parseTasks(json, proj) {
+
+	proj.tasks.length = 0;
+	console.log('array cleared');
+
     rr = eval(json);
     for(var i = 0 ; rr[i]!=null; i++) {
         id = rr[i].id;
@@ -26,6 +30,7 @@ function Project(id) {
     }
     
     this.loadProjTasks = function() {
+
         $.ajax({
             type: 'POST',
             url: Config.server + 'ajax/getTasksProject.php',
