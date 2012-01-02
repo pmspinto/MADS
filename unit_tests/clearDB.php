@@ -28,6 +28,7 @@
 			  `email` varchar(64) NOT NULL,
 			  `creationdate` datetime NOT NULL,
 			  `description` varchar(500) NOT NULL default 'Sem descriÃ§Ã£o',
+			  `currentsprint` int(11) NOT NULL default '1',
 			  PRIMARY KEY  (`id`)
 			) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=29 ;
 
@@ -35,16 +36,17 @@
 			-- Dumping data for table `projects`
 			--
 
-			INSERT INTO `projects` (`id`, `name`, `email`, `creationdate`, `description`) VALUES
-			(1, 'Tutorial 1', 'mads@fe.up.pt', '2011-10-07 10:57:15', ''),
-			(2, 'MADS', 'mads@fe.up.pt', '2011-10-07 11:05:29', ''),
-			(5, 'Tutorial', 'v@gmail.com', '2011-10-19 14:40:59', ''),
-			(20, 'Tutorial', 'a@a.a', '2011-10-19 16:10:46', ''),
-			(21, 'Tutorial', 'coiso@fe.up.pt', '2011-10-19 17:13:24', ''),
-			(23, 'Tracker', 'mads@fe.up.pt', '2011-11-21 22:58:29', 'Cena mais robuscada.'),
-			(24, '', 'mads@fe.up.pt', '2011-11-23 11:10:32', ''),
-			(25, 'lo', 'mads@fe.up.pt', '2011-11-23 14:36:12', 'lol'),
-			(27, 'Tutorial', 'ei07089@fe.up.pt', '2011-12-18 19:00:07', 'Sem descriÃ§Ã£o');
+			INSERT INTO `projects` (`id`, `name`, `email`, `creationdate`, `description`, `currentsprint`) VALUES
+			(1, 'Tutorial 1', 'mads@fe.up.pt', '2011-10-07 10:57:15', '', 1),
+			(2, 'MADS', 'mads@fe.up.pt', '2011-10-07 11:05:29', '', 1),
+			(5, 'Tutorial', 'v@gmail.com', '2011-10-19 14:40:59', '', 1),
+			(20, 'Tutorial', 'a@a.a', '2011-10-19 16:10:46', '', 1),
+			(21, 'Tutorial', 'coiso@fe.up.pt', '2011-10-19 17:13:24', '', 1),
+			(23, 'Tracker', 'mads@fe.up.pt', '2011-11-21 22:58:29', 'Cena mais robuscada.', 1),
+			(24, '', 'mads@fe.up.pt', '2011-11-23 11:10:32', '', 1),
+			(25, 'lo', 'mads@fe.up.pt', '2011-11-23 14:36:12', 'lol', 1),
+			(27, 'Tutorial', 'ei07089@fe.up.pt', '2011-12-18 19:00:07', 'Sem descriÃƒÂ§ÃƒÂ£o', 1),
+			(29, 'Tutorial', 'email@emailhost.com', '2012-01-02 17:29:09', 'Sem descriÃƒÂ§ÃƒÂ£o', 1);
 
 			-- --------------------------------------------------------
 

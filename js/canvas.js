@@ -260,6 +260,9 @@ function bind_mouse_events(task){
 		// Change the icon
 		$(this).attr("src","css/images/" + taskdone_path(sprint));
 		$(this).attr("title",taskdone_title(sprint));
+		if(sprint == 0)
+			$('#sprint_'+task.id).css({ "visibility":"visible" });
+		else $('#sprint_'+task.id).css({ "visibility":"hidden" });
 		// change the image
 		setTaskClass(task);
 	});

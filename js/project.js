@@ -172,7 +172,9 @@ function parseProjectInfo(json, proj) {
 	//console.log(rec);
 	proj.name = rec.name;
 	proj.description = rec.description;
-	proj.currentSprint = rec.currentsprint;
+
+	proj.currentSprint = parseInt(rec.currentsprint);
+
 	proj.maxeffort = rec.maxeffort;
 	proj.users = rec.users;
 	
