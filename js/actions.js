@@ -121,7 +121,7 @@ function loginSuccessCallback(data){
 		if(vgprojects.length > 0){
 			$.ajaxSetup({async:false});
 			currentProject.loadProjInfo();
-			//currentProject.loadProjTasks();
+			currentProject.loadProjTasks();
 			$.ajaxSetup({async:true});
 		}
 

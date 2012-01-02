@@ -35,7 +35,7 @@ function canvasInit(tasks) {
 		new_effort = centerx + (ev.pageX - largura/2)/canvas_factor;
 		new_priority = centery + (ev.pageY - altura/2)/canvas_factor;
 				
-		new_task = new Task(0, "Set content", "mads@fe.up.pt", 2, 1, 0, new_priority, new_effort);
+		new_task = new Task(0, "Set content", "mads@fe.up.pt", currentProject.id, 0, 0, new_priority, new_effort);
 		new_task.addTask();
 		currentProject.tasks.push(new_task);
 		
@@ -252,10 +252,14 @@ function bind_mouse_events(task_id){
 		index = get_task_index(task_id);
 		
 		// Make necessary changes on the DB
-		set_task_done(task_id,currentProject.currentSprint);
+		sprint = ((currentProject.tasks[index].sprintdone == 0)? currentProject.currentSprint : 0);
+		set_task_done(task_id,sprint);
 		
 		// Make changes locally
-		currentProject.tasks[index].sprintdone = currentProject.currentSprint;
+		currentProject.tasks[index].sprintdone = sprint;
+		
+		// Change the icon
+		$(this).attr("src",(sprint > 0)? "css/images/delete_icon.png" : "css/images/check_icon.png");
 	});
 }
 
@@ -266,6 +270,8 @@ function addtosprint_path(task){
 		return "add_to_sprint.png";
 	else return "remove_from_sprint.png"
 }
+
+
 
 function filterByDone() {
 	if (document.menuform.filter_done.checked == true) {
