@@ -67,12 +67,12 @@ function Project(id) {
 }
 
 function parseProjectInfo(json, proj) {
-	console.log("json: "+json);
+	//console.log("json: "+json);
 	rec = JSON.parse(json);
-	console.log(rec);
+	//console.log(rec);
 	proj.name = rec.name;
 	proj.description = rec.description;
-	proj.currentSprint = rec.currentsprint;
+	proj.currentSprint = parseInt(rec.currentsprint);
 	proj.users = rec.users;
 	
 	console.log(proj);
@@ -80,6 +80,7 @@ function parseProjectInfo(json, proj) {
 }
 
 function parseTasks(json, proj) {
+	proj.tasks = [];
     rr = eval(json);
     for(var i = 0 ; rr[i]!=null; i++) {
         id = rr[i].id;

@@ -19,17 +19,6 @@ function tasksProject() {
 
 }
 
-function tasksUser(){
-	
-	// the project
-	var userEmail = "mads@fe.up.pt";
-
-	// test the value
-	expect(1);
-	ok(true, "just a stub for " + userEmail);
-	
-
-}
 
 
 // adds a new task, receives the id of the inserted tasks and checks the DB for a tasks with that id
@@ -49,7 +38,6 @@ function addTask(){
 	currentProject.loadProjTasks();
 	$.ajaxSetup({async:true});
 
-	console.log(currentProject);
 
 	// get the last task
 	var testTask = currentProject.tasks[currentProject.tasks.length-1];

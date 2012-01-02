@@ -13,7 +13,7 @@
 
     	<!-- the source files-->
     	<script type="text/javascript" src="../js/actions.js"></script> 
-    	<script type="text/javascript" src="../js/Project.js"></script> 
+    	<script type="text/javascript" src="../js/project.js"></script> 
     	<script type="text/javascript" src="../js/Config.js"></script>
 	<script type="text/javascript" src="../js/task.js"></script>
 
@@ -21,6 +21,7 @@
 	<script type="text/javascript" src="login_tests.js"></script>
 	<script type="text/javascript" src="task_tests.js"></script>	
  	<script type="text/javascript" src="register_tests.js"></script>
+ 	<script type="text/javascript" src="project_tests.js"></script>
  	<script type="text/javascript" src="clear.js"></script>	
     
     	<script type="text/javascript">  
@@ -42,10 +43,15 @@
 
 			module("Tasks");
 			test("Tasks for a project", tasksProject);
-			test("Tasks for a user", tasksUser);
 			test("Add a task", addTask);
 			test("Save a task", saveTask);
 			test("Delete a task", deleteTask);
+
+			module("Projects");
+			test("Load project info", loadProjInfoTest);
+			test("Save basic project info", saveBasicProjectInfoTest);
+			test("Remove user", removeUserTest);	
+			
 		});
 		
     </script>  
