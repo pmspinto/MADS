@@ -15,6 +15,10 @@
 	$link = mysql_connect('gnomo.fe.up.pt', 'ei07089', 'miguelchefao007')
 		or die('Could not connect: ' . mysql_error());
 	
-	mysql_select_db('ei07089') or die('Could not select database');
+	mysql_select_db('ei07089') or die('Could not select database');*/
 
+<<<<<<< HEAD
 >>>>>>> 147681d7745d27e4998b4ff41068529814b4a1c1
+=======
+?>
+>>>>>>> 83b84d686ddb834ae26d6be67f264b9110699b94

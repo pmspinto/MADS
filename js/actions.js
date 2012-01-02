@@ -150,6 +150,7 @@ function registerSuccessCallback(data){
 	}
 }
 
+<<<<<<< HEAD
 // function to delete a task
 function deleteTask(task_id){
 	$.ajax({
@@ -186,3 +187,9 @@ function set_task_done(id,sprint){
 		}
 	});
 }
+=======
+// function to be called when the user clicks the button to advance the current sprint of the project
+function actionNextSprint(){
+	console.log("LOOL");
+}
+>>>>>>> 83b84d686ddb834ae26d6be67f264b9110699b94
