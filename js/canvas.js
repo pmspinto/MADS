@@ -201,7 +201,6 @@ function canvasInit(tasks) {
 		});
 	}
 	
-	
 	// MISC FUNCTIONS
 	
 	// Returns a string representing the path to the "Add to sprint/Remove from sprint" image
@@ -222,7 +221,13 @@ function canvasInit(tasks) {
 	
 	// Creates the post it
 	function create_postit(i){
-		$("#whiteboard").append('<div id="' + currentProject.tasks[i].id + '" class="postit">' +
+		var postitclass;
+		if (currentProject.tasks[i].sprintdone > 0)
+			postitclass = "postitdone";
+		else
+			postitclass = "postit";
+			
+		$("#whiteboard").append('<div id="' + currentProject.tasks[i].id + '" class="'+postitclass+'">' +
 									'<img id="close_' + currentProject.tasks[i].id + '" title="Delete task" src="css/images/delete_icon.png" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; visibility:hidden;"/>' +
 									'<img id="check_' + currentProject.tasks[i].id + '" title="Mark as done" src="css/images/check_icon.png" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; visibility:hidden;"/>' +
 									'<img id="sprint_' + currentProject.tasks[i].id + '" title="Add to the current sprint" src="css/images/' + addtosprint_path(currentProject.tasks[i]) + '" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; visibility:hidden;"/>' +

@@ -14,7 +14,6 @@
 	
 	$idproj = $_POST['idproj'];
 	
-	
 	$query = "SELECT id,name,user,idproj,idsprint,sprintdone,priority,effort
 			FROM tasks
 			WHERE idproj = " . "'" . $idproj . "'";
@@ -23,8 +22,6 @@
 	
 	while($resultArray[]=mysql_fetch_assoc($result));
 	array_pop($resultArray);
-	
-	
 	
 	echo json_encode($resultArray);	
 ?>

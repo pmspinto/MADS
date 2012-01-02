@@ -30,7 +30,14 @@ function logout_action() {
 	//TODO fazer a chamada de ajax
 	//ajax_logout();
 	
-	switchdialog(1);
+	vgemail = null;
+	vgname = null;
+	vgprojects = null;
+	currentProject = null;
+	showProgressDialog();
+	
+	//switchdialog(1);
+	location.reload(true);
 }
 
 function ajax_logout() {
@@ -114,7 +121,7 @@ function loginSuccessCallback(data){
 		if(vgprojects.length > 0){
 			$.ajaxSetup({async:false});
 			currentProject.loadProjInfo();
-			currentProject.loadProjTasks();
+			//currentProject.loadProjTasks();
 			$.ajaxSetup({async:true});
 		}
 
