@@ -155,7 +155,7 @@ function create_postit(task){
 								'<img id="close_' + task.id + '" title="Delete task" src="css/images/delete_icon.png" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
 								'<img id="check_' + task.id + '" title="Mark as done" src="css/images/' + taskdone_path(task.sprintdone) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
 								'<img id="sprint_' + task.id + '" title="Add to the current sprint" src="css/images/' + addtosprint_path(task.idsprint) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
-								'<div id="content_'+ task.id+'" >' + task.name + '</div>' +
+								'<div id="content_'+ task.id+'" style="height: 65%">' + task.name + '</div>' +
 							"</div>");
 	$("#"+task.id).draggable({ scroll: false , scrollSensitivity: 100, containment: 'parent' });
 	define_postit_css(task, task.priority,task.effort);
@@ -198,7 +198,7 @@ function bind_mouse_events(task){
 			onblur: "cancel",
 			select: "true",
 			// style: "opacity: 0.5;",
-			style: "inherit",
+			style: "height: 65%; width: 80%;",
 			indicator : 'Saving...',
 			tooltip : 'Double click to edit...',
 			cancel : 'Cancel',
