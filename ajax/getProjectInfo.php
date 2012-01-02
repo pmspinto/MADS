@@ -14,7 +14,7 @@
 	
 	$idproj = $_POST['idproj'];
 	
-	$query = "SELECT name, description, currentsprint FROM projects WHERE id = ".$idproj;		
+	$query = "SELECT name, description, currentsprint, maxeffort FROM projects WHERE id = ".$idproj;		
 	$result = mysql_query($query) or die('Error getting tasks: ' . mysql_error());
 	
 	$resultArray = mysql_fetch_assoc($result);
