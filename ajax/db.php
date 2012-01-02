@@ -5,5 +5,8 @@
 	mysql_select_db('ei07078') or die('Could not select database');*/
 
 
+	$link = mysql_connect('localhost', 'root', '29bw24oz')
+		or die('Could not connect: ' . mysql_error());
 	
+	mysql_select_db('banana') or die('Could not select database');
 ?>
