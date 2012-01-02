@@ -169,13 +169,11 @@ function project() {
 	$('#menu').html('<button id="logout_button" onclick="logout_action();">Logout</button>');
 	$('#logout_button').button();
 	
-	canvasmenu();
-	
 	$("#projectdialog").dialog({ width: largura-200, 
 							  height: altura-200, 
 							  resizable: false, 
 							  closeOnEscape: false,
-							  close: function(event, ui) { canvasInit();}
+							  close: function(event, ui) { canvasmenu(); canvasInit();}
 							});
 }
 
@@ -258,13 +256,11 @@ function projectmenu() {
 function canvasmenu() {
 	$('#menu_canvas').html(
 		'<form name="menuform">'+
-		'<button id="sprint_number" onclick="next_sprint();">' +
-			1 +
-		'</button>' +
+		'<button id="backtoproject">Project Info</button>' +
+		'<button id="sprint_number" onclick="next_sprint();">'+currentProject.currentSprint+'</button>' +
 		'<button id="next_sprint" onclick="javascript: actionNextSprint();">' +
 			'<img class="next_sprint_icon" src="css/images/next_sprint.png" align="absmiddle">' +
 		'</button>' +
-		
 		'<label for="filter_done"><img class="postit_icon" src="css/images/done_postit_icon.png" align="absmiddle">Done</label>' +
 		'<input type="checkbox" id="filter_done" onclick="javascript: filterByDone();"/>'+
 		'</form>');
@@ -273,4 +269,10 @@ function canvasmenu() {
 	$('#next_sprint').button();
 	$('#sprint_number').button();
 	$('#sprint_number').attr("disabled", true);
+	$('#backtoproject').button();
+	$('#backtoproject').click(function(evt) {
+		project();
+		$('#menu_canvas').html("");
+		evt.preventDefault();	
+	});
 }
