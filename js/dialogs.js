@@ -117,11 +117,6 @@ function project() {
 										'<div id="projectinfo">'+
 										'</div>'+
 										'<div id="membersinfo">'+
-											'<h2>Members info</h2>'+
-											'<p><img src="css/images/remove_user.png" />Jack Daniels</p>'+
-											'<p><img src="css/images/remove_user.png" />Johnny Walker</p>'+
-											'<p><img src="css/images/remove_user.png" />William Grant</p>'+
-											'<button id="newmember">Add member</button>'+
 										'</div>'+
 										'<div id="projectchanges">'+
 											'<h2>Last Changes</h2>'+
@@ -144,11 +139,6 @@ function project() {
 		$('#projectinnercontent').html('<div id="projectinfo">'+
 										'</div>'+
 										'<div id="membersinfo">'+
-											'<h2>Members info</h2>'+
-											'<p><img src="css/images/remove_user.png" />Jack Daniels</p>'+
-											'<p><img src="css/images/remove_user.png" />Johnny Walker</p>'+
-											'<p><img src="css/images/remove_user.png" />William Grant</p>'+
-											'<button id="newmember">Add member</button>'+
 										'</div>'+
 										'<div id="projectchanges">'+
 											'<h2>Last Changes</h2>'+
@@ -192,8 +182,19 @@ function project() {
 function updatedialog() {
 	projectinfo();
 	projectmenu();
+	projectusers();
 }
+
+function projectusers() {
+	var userslist = '<h2>Members info</h2>';
 	
+	for(var i = 0; i<currentProject.users.length; i++) {
+		userslist += '<p><img src="css/images/remove_user.png" />'+currentProject.users[i].name+'</p>'
+	}
+		
+	userslist += '<button id="newmember">Add member</button>';
+	$('#membersinfo').html(userslist);
+}
 
 function projectinfo() {
 	$('#projectinfo').html(
