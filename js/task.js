@@ -15,7 +15,7 @@ function Task(id,name,user,idproj,idsprint,sprintdone,priority,effort) {
 		var new_id;
 		$.ajax({
 			type: 'POST',
-			url: 'ajax/addTask.php',
+			url: Config.server + 'ajax/addTask.php',
 			async: false,
 			data: {
 					name: this.name,
@@ -38,7 +38,7 @@ function Task(id,name,user,idproj,idsprint,sprintdone,priority,effort) {
 	this.saveTask = function() { 
 		$.ajax({
 			type: 'POST',
-			url: 'ajax/saveTask.php',
+			url: Config.server + 'ajax/saveTask.php',
 			data: {
 					id: this.id,
 					name: this.name,
@@ -60,7 +60,7 @@ function Task(id,name,user,idproj,idsprint,sprintdone,priority,effort) {
 	this.deleteTask = function deleteTask() {
 		_taskToBeDeleted = this.id;
 		$.ajax({
-			url: "ajax/delTask.php",
+			url: Config.server + "ajax/delTask.php",
 			type: 'POST',
 			data: { id: this.id },
 			success: function() {
