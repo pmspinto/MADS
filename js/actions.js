@@ -114,7 +114,7 @@ function loginSuccessCallback(data){
 		vgprojects = response['projs'];
 		vgname = response['name'];
 
-		console.log(vgprojects);
+		//console.log(vgprojects);
 		currentProject = new Project(vgprojects[0]['id']);
 
 		//load tasks
@@ -148,9 +148,4 @@ function registerSuccessCallback(data){
 		// error message
 		showErrorMsg("Error",data);
 	}
-}
-
-// function to be called when the user clicks the button to advance the current sprint of the project
-function actionNextSprint(){
-	console.log("LOOL");
 }

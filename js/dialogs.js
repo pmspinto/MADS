@@ -153,13 +153,15 @@ function project() {
 	});
 	
 	$('#proj_burndown').click(function(e) {
-		$('#projectinnercontent').html('<div id="burndown_container" style="width: 800px; height: 400px; margin: 0 auto">cenas</div>');
-		Graph('Mads2011', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], [ 28, 25, 23, 21, 18, 14, 10, 7, 6, 5, 3, 0], 'Sprint', 'Effort points left', 'Burndown', 'burndown_container');
+		$('#projectinnercontent').html('<div id="burndown_container" style="width: 800px; height: 390px; margin: 0 auto">cenas</div>');
+		var sprints = currentProject.getSprints();
+		Graph(currentProject.name, sprints['sprint'], sprints['effort'], sprints['annotations'], 'Sprint', 'Effort points left', 'Burndown', 'burndown_container');
 	});
 	
 	$('#proj_velocity').click(function(e) {
-		$('#projectinnercontent').html('<div id="velocity_container" style="width: 800px; height: 400px; margin: 0 auto"></div>');
-		Graph('Mads2011', [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], [ 10, 11, 11, 8, 9, 12, 9, 7, 11, 10, 11, 10], 'Sprint', 'Effort points', 'Velocity', 'velocity_container');
+		$('#projectinnercontent').html('<div id="velocity_container" style="width: 800px; height: 390px; margin: 0 auto"></div>');
+		var velocity = currentProject.getVelocity();
+		VelGraph(currentProject.name, velocity['sprint'], velocity['velocity'],'Sprint', 'Effort points', 'Velocity', 'velocity_container');
 	});
 	
 	//project info
@@ -258,13 +260,14 @@ function canvasmenu() {
 		'<form name="menuform">'+
 		'<button id="backtoproject">Project Info</button>' +
 		'<button id="sprint_number" onclick="next_sprint();">'+currentProject.currentSprint+'</button>' +
-		'<button id="next_sprint" onclick="javascript: actionNextSprint();">' +
+		'</button>' +
+		'<button id="next_sprint">' +
 			'<img class="next_sprint_icon" src="css/images/next_sprint.png" align="absmiddle">' +
 		'</button>' +
 		'<label for="filter_done"><img class="postit_icon" src="css/images/done_postit_icon.png" align="absmiddle">Done</label>' +
 		'<input type="checkbox" id="filter_done" onclick="javascript: filterByDone();"/>'+
 		'</form>');
-		
+	
 	$('#filter_done').button();
 	$('#next_sprint').button();
 	$('#sprint_number').button();
@@ -274,5 +277,10 @@ function canvasmenu() {
 		project();
 		$('#menu_canvas').html("");
 		evt.preventDefault();	
+	});
+	
+	$('#next_sprint').click(function(ev) {
+		ev.preventDefault();
+		actionNextSprint();
 	});
 }
