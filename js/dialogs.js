@@ -126,10 +126,9 @@ function project() {
 										'</div>'+
 									'</div>'+
 								'</div>'+
+								'<div id="userlist" title="Users">'+
+								'</div>'+
 							'</div>');
-							
-	$('#saveproject').button();
-	$('#newmember').button();
 	$('#proj_info').button();
 	$('#proj_burndown').button();
 	$('#proj_velocity').button();
@@ -146,10 +145,8 @@ function project() {
 											'<p><img src="css/images/post_icon.png" /><span>17 Dec, 2011</span> - Move tasks in whiteboard - done!</p>'+
 											'<p><img src="css/images/post_icon.png" /><span>16 Dec, 2011</span> - Burndown chart - Added</p>'+
 										'</div>');
-		$('#saveproject').button();
-		$('#newmember').button();
 		$('#projectinnercontent').show('slow');	
-		projectinfo();
+		updatedialog();
 	});
 	
 	$('#proj_burndown').click(function(e) {
@@ -189,23 +186,50 @@ function projectusers() {
 	var userslist = '<h2>Members info</h2>';
 	
 	for(var i = 0; i<currentProject.users.length; i++) {
-		userslist += '<p><img src="css/images/remove_user.png" />'+currentProject.users[i].name+'</p>'
+		userslist += '<p><a class="projectusers" id="'+currentProject.users[i].email+'"><img src="css/images/remove_user.png" /></a>'+currentProject.users[i].name+'</p>'
 	}
 		
 	userslist += '<button id="newmember">Add member</button>';
 	$('#membersinfo').html(userslist);
+	
+	$('#newmember').button();
+	$('#newmember').click(function() {
+		$('#userlist').html('<p><img src="css/images/add_member.png" />John Terry</p><p><img src="css/images/add_member.png" />Francis Curtis</p><p><img src="css/images/add_member.png" />Luv Tender</li></p>');
+		$('#userlist').dialog({ width: 250, 
+							  height: 300, 
+							  resizable: false, 
+							  closeOnEscape: false,
+							});
+	});
+	
+	$('.projectusers').click(function() {
+		var email = $(this).attr('id');
+		for(var i = 0; i<currentProject.users.length; i++)
+			if(currentProject.users[i].email == email)
+				currentProject.users.splice(i, 1);
+		currentProject.removeUser(email);
+	});
 }
 
 function projectinfo() {
 	$('#projectinfo').html(
 		'<h2>Project info</h2>'+
 		'<p>Name: </p>'+
-		'<input type="text" name="projectname" value="'+currentProject.name+'"/>'+
+		'<input type="text" id="projectname" value="'+currentProject.name+'"/>'+
 		'<p>Description: </p>'+
-		'<textarea rows="5" cols="30">'+
+		'<textarea id="projectdescription" rows="5" cols="30">'+
 			currentProject.description+
 		'</textarea><br/>'+
 		'<button id="saveproject">Save</button>');
+		
+	$('#saveproject').button();
+	$('#saveproject').click(function() {
+		currentProject.name = $('#projectname').attr('value');
+		currentProject.description = $('#projectdescription').val();
+		console.log(currentProject);
+		//alert('inside');
+		currentProject.saveBasicProjectInfo();
+	});
 }
 
 function projectmenu() {
