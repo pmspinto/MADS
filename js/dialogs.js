@@ -104,11 +104,17 @@ function project() {
 	var menu = projectmenu();
 	$("#whiteboard").html( '<div id="projectdialog" title="Projects">'+
 								'<div id="projectmenu">'+
+									'<div id="projectbuttondiv">'+
+										'<button id="newproject">New Project</button>'+
+									'</div>'+
+									'<div id="projectlist">'+
+									'</div>'+
 								'</div>'+
 								'<div id="projectcontent">'+
 									'<button id="proj_info">Project Info</button>'+
 									'<button id="proj_burndown">Burndown Chart</button>'+
 									'<button id="proj_velocity">Velocity Chart</button>'+
+									
 									'<div id="projectinnercontent">'+
 										'<div id="projectinfo">'+
 										'</div>'+
@@ -128,6 +134,7 @@ function project() {
 	$('#proj_info').button();
 	$('#proj_burndown').button();
 	$('#proj_velocity').button();
+	$('#newproject').button();
 	
 	$('#proj_info').click(function(e) {
 		$('#projectinnercontent').hide();
@@ -216,14 +223,17 @@ function projectinfo() {
 		'<textarea id="projectdescription" rows="5" cols="30">'+
 			currentProject.description+
 		'</textarea><br/>'+
+		'<p>Max effort: <input id="projectmaxeffort" type="number" min="0" max="30" step="1" value ="'+currentProject.maxeffort+'"/> </p>'+
 		'<button id="saveproject">Save</button>');
 		
 	$('#saveproject').button();
 	$('#saveproject').click(function() {
 		currentProject.name = $('#projectname').attr('value');
 		currentProject.description = $('#projectdescription').val();
-		console.log(currentProject);
-		//alert('inside');
+		currentProject.maxeffort = $('#projectmaxeffort').attr('value');
+		for(var i = 0; i<vgprojects.length; i++)
+			if(vgprojects[i]['id'] == currentProject.id)
+				vgprojects[i]['name'] = currentProject.name;
 		currentProject.saveBasicProjectInfo();
 	});
 }
@@ -237,7 +247,7 @@ function projectmenu() {
 		else
 			newmenu += '<div class="projectmenuitem" id="'+vgprojects[i]['id']+'"> <p>'+vgprojects[i]['name']+'</p></div>'
 	}
-	$('#projectmenu').html(newmenu);
+	$('#projectlist').html(newmenu);
 	$('.projectmenuitem').click(function() {
 		currentProject = new Project($(this).attr("id"));
 		currentProject.loadProjTasks();
@@ -257,15 +267,9 @@ function canvasmenu() {
 		
 		'<label for="filter_done"><img class="postit_icon" src="css/images/done_postit_icon.png" align="absmiddle">Done</label>' +
 		'<input type="checkbox" id="filter_done" onclick="javascript: filterByDone();"/>'+
-		
-		'<button id="filter_sprint" onclick="filter_sprint();">' +
-			'<img class="postit_icon" src="css/images/sprint_postit_icon.png" align="absmiddle">' +
-			'Sprint' +
-		'</button>'+
 		'</form>');
 	
 	$('#filter_done').button();
-	$('#filter_sprint').button();
 	$('#next_sprint').button();
 	$('#sprint_number').button();
 	$('#sprint_number').attr("disabled", true);

@@ -7,6 +7,7 @@ function Project(id) {
     
     this.tasks = new Array();
 	this.currentSprint = 1;
+	this.maxeffort = 5;
     
     this.loadProjInfo = function() {
         $.ajax({
@@ -23,7 +24,6 @@ function Project(id) {
     }
     
     this.loadProjTasks = function() {
-
         $.ajax({
             type: 'POST',
             url: Config.server + 'ajax/getTasksProject.php',
@@ -41,7 +41,7 @@ function Project(id) {
 		$.ajax({
             type: 'POST',
             url: Config.server + 'ajax/setprojectbasicinfo.php',
-            data: { idproj: this.id, name: this.name, description: this.description},
+            data: { idproj: this.id, name: this.name, description: this.description, maxeffort: this.maxeffort},
             success: function(data){
                 updatedialog();
             },
@@ -69,17 +69,19 @@ function Project(id) {
 function parseProjectInfo(json, proj) {
 	console.log("json: "+json);
 	rec = JSON.parse(json);
-	console.log(rec);
+	//console.log(rec);
 	proj.name = rec.name;
 	proj.description = rec.description;
 	proj.currentSprint = rec.currentsprint;
+	proj.maxeffort = rec.maxeffort;
 	proj.users = rec.users;
 	
-	console.log(proj);
+	//console.log(proj);
 	updatedialog();
 }
 
 function parseTasks(json, proj) {
+	proj.tasks = [];
     rr = eval(json);
     for(var i = 0 ; rr[i]!=null; i++) {
         id = rr[i].id;
