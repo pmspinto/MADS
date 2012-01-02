@@ -155,8 +155,8 @@ function create_postit(i){
 		
 	$("#whiteboard").append('<div id="' + currentProject.tasks[i].id + '" class="'+postitclass+'">' +
 								'<img id="close_' + currentProject.tasks[i].id + '" title="Delete task" src="css/images/delete_icon.png" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
-								'<img id="check_' + currentProject.tasks[i].id + '" title="Mark as done" src="css/images/check_icon.png" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
-								'<img id="sprint_' + currentProject.tasks[i].id + '" title="Add to the current sprint" src="css/images/' + addtosprint_path(currentProject.tasks[i]) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
+								'<img id="check_' + currentProject.tasks[i].id + '" title="Mark as done" src="css/images/' + taskdone_path(currentProject.tasks[i].sprintdone) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
+								'<img id="sprint_' + currentProject.tasks[i].id + '" title="Add to the current sprint" src="css/images/' + addtosprint_path(currentProject.tasks[i].idsprint) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
 								'<div id="content_'+currentProject.tasks[i].id+'" >' + currentProject.tasks[i].name + '</div>' +
 							"</div>");
 	$("#"+currentProject.tasks[i].id).draggable({ scroll: false , scrollSensitivity: 100, containment: 'parent' });
@@ -198,7 +198,7 @@ function bind_mouse_events(task_id){
 			event: "dblclick",
 			onblur: "cancel",
 			style: "opacity: 0.5;",
-			type: "textarea"
+			// type: "textarea"
 	});
 	
 	// Mouse over the post it, show and hide the top right icons
@@ -236,14 +236,14 @@ function bind_mouse_events(task_id){
 		sprint = ((currentProject.currentSprint == currentProject.tasks[index].idsprint)? 0 : currentProject.currentSprint);
 		
 		// Make necessary changes on the DB
-		console.log("Vou chamar o set task sprint para a task (" + task_id + "," + currentProject.tasks[index].name + ") com index = " + index + " e o sprint = " + sprint);
+		// console.log("Vou chamar o set task sprint para a task (" + task_id + "," + currentProject.tasks[index].name + ") com index = " + index + " e o sprint = " + sprint);
 		set_task_sprint(task_id,sprint);
 		
 		// Make changes locally
 		currentProject.tasks[index].idsprint = sprint;
 		
 		// Change the icon image
-		$(this).attr("src","css/images/" + addtosprint_path(currentProject.tasks[index]));
+		$(this).attr("src","css/images/" + addtosprint_path(currentProject.tasks[index].idsprint));
 	});
 	
 	// Set as done
@@ -259,19 +259,23 @@ function bind_mouse_events(task_id){
 		currentProject.tasks[index].sprintdone = sprint;
 		
 		// Change the icon
-		$(this).attr("src",(sprint > 0)? "css/images/delete_icon.png" : "css/images/check_icon.png");
+		$(this).attr("src","css/images/" + taskdone_path(sprint));
 	});
 }
 
 // Returns a string representing the path to the "Add to sprint/Remove from sprint" image
 // Receives the task 
-function addtosprint_path(task){
-	if(task.idsprint == 0)
+function addtosprint_path(idsprint){
+	if(idsprint == 0)
 		return "add_to_sprint.png";
-	else return "remove_from_sprint.png"
+	else return "remove_from_sprint.png";
 }
 
-
+function taskdone_path(sprintdone){
+	if(sprintdone == 0)
+		return "check_icon.png";
+	else return "uncheck_icon.png";
+}
 
 function filterByDone() {
 	if (document.menuform.filter_done.checked == true) {
