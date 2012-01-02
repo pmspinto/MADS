@@ -159,6 +159,11 @@ body {
 	margin-right: 10px;
 }
 
+#userlist img {
+	width:20px;
+	margin-right: 10px;
+}
+
 #projectchanges {
 	float:left;
 	width: 30%;
