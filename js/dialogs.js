@@ -32,15 +32,11 @@ function switchdialog(newState) {
 function welcomedialog() {
 	$("#whiteboard").html( '<div id="welcomedialog" title="Welcome to Banana Tracker!">'+
 								'<div id="loginleft">'+
-									'<div id="post_it">'+
-										'<div id = "post_it_text">' +
-											'<p>Existe duas variaveis importantes num projeto: Esforco e Prioridade</p>' +
-											'<p>O problema destas variaveis e a ausencia de uma representação visual pelo que normalmente vem associadas de um numero</p>' +
-											'<p>Para resolver este problema oferecemos: Um quadro e post its.</p>' +
-											'<p>No quadro podem ser adicionados post its e a sua organização representa o esforço e as prioridades de cada tarefa </p>' +
-											'<p>Quanto mais para a direita no quadro um post it estiver mais esforço está associado, quanto mais para cima maior a prioridade</p>' +
+									'<div id="intro">'+
+										'<img src="css/images/logo.png" alt="Banana Tracker Logo"/>' +
+										'<p> In Banana Tracker we provide tools to organize your tasks. You can sort your tasks in a bidimensional board. </p>' +
+										'<img src="css/images/graph.png" class="graph" alt="Effort and Priority Graph"/>' +
 										'</div>' +
-									'</div>' +
 								'</div>'+
 								'<div id="loginright">'+
 									'<form id="loginform" action="javascript: login_action();" class="loginform">'+

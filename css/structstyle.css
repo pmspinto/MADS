@@ -60,6 +60,10 @@ body {
 	background-image: url(images/postit_done.svg);
 }
 
+.postitsprint {
+	background-image: url(images/postit_sprint.svg);
+}
+
 /* PROJECT MENU */
 
 #projectmenu {
