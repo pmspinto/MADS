@@ -36,6 +36,34 @@ function Project(id) {
             }
         });
     }   
+	
+	this.saveBasicProjectInfo = function() {
+		$.ajax({
+            type: 'POST',
+            url: Config.server + 'ajax/setprojectbasicinfo.php',
+            data: { idproj: this.id, name: this.name, description: this.description},
+            success: function(data){
+                updatedialog();
+            },
+            error: function(){
+                console.log('error in getTasksProject');
+            }
+        });
+	}
+	
+	this.removeUser = function(email) {
+		$.ajax({
+            type: 'POST',
+            url: Config.server + 'ajax/removeprojectmember.php',
+            data: { idproj: this.id, email: email},
+            success: function(data){
+				updatedialog();
+            },
+            error: function(){
+                console.log('error in getTasksProject');
+            }
+        });
+	}
 }
 
 function parseProjectInfo(json, proj) {
