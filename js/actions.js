@@ -156,3 +156,15 @@ function deleteTask(task_id){
   		}
 	});
 }
+
+// function to be called when adding or removing a certain task to the current project's sprint
+function set_task_sprint(task,sprint){
+	$.ajax({
+		url: "ajax/setTaskSprint.php",
+		type: 'POST',
+		data: { id: task.id, sprint: sprint },
+		success: function(){
+			console.log("set task sprint successfull");
+		}
+	});
+}

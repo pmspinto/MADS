@@ -173,6 +173,7 @@ function canvasInit(tasks) {
 			// To be done in this sprint
 			$('#sprint_'+task_id).click(function(e){
 				// Make necessary changes on the DB
+				set_task_sprint(currentProject.tasks[get_task_index(task_id)],(sprint == 1)?0:currentProject.sprint);
 				
 				// Change the icon image
 				if(sprint == 1){
@@ -190,6 +191,14 @@ function canvasInit(tasks) {
 	
 	// MISC FUNCTIONS
 	
+	// Returns a string representing the path to the "Add to sprint/Remove from sprint" image
+	// Receives the task 
+	function addtosprint_path(task){
+		if(task.idsprint == 0)
+			return "add_to_sprint.png";
+		else return "remove_from_sprint.png"
+	}
+	
 	// Returns the index of the correspondent task id
 	function get_task_index(task_id){
 		var j;
@@ -204,7 +213,7 @@ function canvasInit(tasks) {
 		$("#whiteboard").append('<div id="' + currentProject.tasks[i].id + '" class="postit">' +
 									'<img id="close_' + currentProject.tasks[i].id + '" title="Delete task" src="css/images/delete_icon.png" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; display:none"/>' +
 									'<img id="check_' + currentProject.tasks[i].id + '" title="Mark as done" src="css/images/check_icon.png" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; display:none"/>' +
-									'<img id="sprint_' + currentProject.tasks[i].id + '" title="Add to the current sprint" src="css/images/add_to_sprint.png" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; display:none"/>' +
+									'<img id="sprint_' + currentProject.tasks[i].id + '" title="Add to the current sprint" src="css/images/' + addtosprint_path(currentProject.tasks[i]) + '" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; display:none"/>' +
 									'<div id="content_'+currentProject.tasks[i].id+'" >' + currentProject.tasks[i].name + '</div>' +
 								"</div>");
 		$("#"+currentProject.tasks[i].id).draggable({ scroll: false , scrollSensitivity: 100, containment: 'parent' });
