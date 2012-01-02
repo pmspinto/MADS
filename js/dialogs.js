@@ -199,20 +199,22 @@ function project() {
 	
 	$('#menu').html('<button id="logout_button" onclick="logout_action();">Logout</button>');
 	$('#menu_canvas').html(
+		'<form name="menuform">'+
 		'<button id="sprint_number" onclick="next_sprint();">' +
 			1 +
 		'</button>' +
 		'<button id="next_sprint" onclick="next_sprint();">' +
 			'<img class="next_sprint_icon" src="css/images/next_sprint.png" align="absmiddle">' +
 		'</button>' +
-		'<button id="filter_done" onclick="filter_done();">' +
-			'<img class="postit_icon" src="css/images/done_postit_icon.png" align="absmiddle">' +
-			'Done' +
-		'</button>' +
+		
+		'<label for="filter_done"><img class="postit_icon" src="css/images/done_postit_icon.png" align="absmiddle">Done</label>' +
+		'<input type="checkbox" id="filter_done" onclick="javascript: filterByDone();"/>'+
+		
 		'<button id="filter_sprint" onclick="filter_sprint();">' +
 			'<img class="postit_icon" src="css/images/sprint_postit_icon.png" align="absmiddle">' +
 			'Sprint' +
-		'</button>');
+		'</button>'+
+		'</form>');
 		
 	$('#logout_button').button();
 	$('#filter_done').button();
