@@ -164,6 +164,16 @@ body {
 	margin-right: 10px;
 }
 
+#projectbuttondiv {
+	float: right;
+	padding-right: 20px;
+	font-size: 13px;
+}
+
+#projectlist {
+	margin-top: 50px;
+}
+
 #projectchanges {
 	float:left;
 	width: 30%;

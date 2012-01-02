@@ -15,8 +15,9 @@
 	$idproj = $_POST['idproj'];
 	$name = $_POST['name'];
 	$description = $_POST['description'];
+	$maxeffort = $_POST['maxeffort'];
 	
-	$result = mysql_query("UPDATE projects SET name='".$name."', description='".$description."' WHERE id = ".$idproj);
+	$result = mysql_query("UPDATE projects SET name='".$name."', description='".$description."', maxeffort='".$maxeffort."' WHERE id = ".$idproj);
 	
 	echo json_encode($resultArray);	
 ?>
