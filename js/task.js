@@ -1,3 +1,5 @@
+var _taskToBeDeleted;
+
 function Task(id,name,user,idproj,idsprint,sprintdone,priority,effort) {
 	this.id = id;
 	this.name = name;
@@ -50,6 +52,25 @@ function Task(id,name,user,idproj,idsprint,sprintdone,priority,effort) {
 					},
 			error: function(){
 				alert("Error in getTasksProject");
+			}
+		});
+	}
+	
+	this.deleteTask = function deleteTask() {
+		_taskToBeDeleted = this.id;
+		$.ajax({
+			url: "ajax/delTask.php",
+			type: 'POST',
+			data: { id: this.id },
+			success: function() {
+				// Show popup telling the user it went well ??
+				for (var i = 0; currentProject.tasks[i] != null; i++) {
+					if (currentProject.tasks[i].id == _taskToBeDeleted) {
+						currentProject.tasks.splice(i, 1);
+						break;
+					}
+				}
+				console.log("DELETE SUCCESSFULL");
 			}
 		});
 	}

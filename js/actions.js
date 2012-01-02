@@ -132,7 +132,6 @@ function loginSuccessCallback(data){
 
 // function called when the register ajax request is successful
 function registerSuccessCallback(data){
-		
 	if (data=="ok"){
 		showErrorMsg("Success","You have been successfully registered. Welcome.");
 		document.getElementById('loginemail').value = email;
@@ -144,15 +143,3 @@ function registerSuccessCallback(data){
 	}
 }
 
-// function to delete a task
-function deleteTask(task_id){
-	$.ajax({
-  		url: "ajax/delTask.php",
-		type: 'POST',
-		data: { id: task_id },
-  		success: function(){
-			// Show popup telling the user it went well ??
-    		console.log("DELETE SUCCESSFULL");
-  		}
-	});
-}
