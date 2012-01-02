@@ -121,7 +121,7 @@ function loginSuccessCallback(data){
 		if(vgprojects.length > 0){
 			$.ajaxSetup({async:false});
 			currentProject.loadProjInfo();
-			//currentProject.loadProjTasks();
+			currentProject.loadProjTasks();
 			$.ajaxSetup({async:true});
 		}
 
@@ -150,3 +150,39 @@ function registerSuccessCallback(data){
 	}
 }
 
+// function to delete a task
+function deleteTask(task_id){
+	$.ajax({
+  		url: "ajax/delTask.php",
+		type: 'POST',
+		data: { id: task_id },
+  		success: function(){
+			// Show popup telling the user it went well ??
+    		console.log("DELETE SUCCESSFULL");
+  		}
+	});
+}
+
+// function to be called when adding or removing a certain task to the current project's sprint
+function set_task_sprint(id,sprint){
+	$.ajax({
+		url: "ajax/setTaskSprint.php",
+		type: 'POST',
+		data: { id: id, sprint: sprint },
+		success: function(){
+			console.log("set task sprint successfull");
+		}
+	});
+}
+
+// function to be called when a task is considered done
+function set_task_done(id,sprint){
+	$.ajax({
+		url: "ajax/setTaskDone.php",
+		type: 'POST',
+		data: { id: id, sprint: sprint },
+		success: function(){
+			console.log("set task done successfull");
+		}
+	});
+}
