@@ -11,7 +11,7 @@
 	$id = $_POST['id'];
 	$sprint = $_POST['sprint'];
 	
-	$query = "UPDATE tasks SET idsprint=".$sprint." WHERE id=".$id;
+	$query = "UPDATE tasks SET sprintdone=".$sprint." where id=".$id;
 	$result = mysql_query($query) or die('Error updating task: ' . mysql_error());
 
 	echo $result;

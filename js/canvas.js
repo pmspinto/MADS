@@ -35,7 +35,7 @@ function canvasInit(tasks) {
 		new_effort = centerx + (ev.pageX - largura/2)/factor;
 		new_priority = centery + (ev.pageY - altura/2)/factor;
 				
-		new_task = new Task(0, "Set content", "mads@fe.up.pt", 2, 1, 0, new_priority, new_effort);
+		new_task = new Task(0, "Set content", "mads@fe.up.pt", 2, 0, 0, new_priority, new_effort);
 		new_task.addTask();
 		currentProject.tasks.push(new_task);
 		
@@ -117,75 +117,88 @@ function canvasInit(tasks) {
 	
 	// EVENTOS DOS POST ITs
 	function bind_mouse_events(task_id){
+	
+		$('#'+task_id).mousedown(function(e) {
+			supress = true;
+			px = -1;
+		});
 		
-		// for (var i = 0; currentProject.tasks[i]!=null; i++) {			
-			$('#'+task_id).mousedown(function(e) {
-				supress = true;
-				px = -1;
-			});
+		$('#'+task_id).mouseup(function(e) {
+			// update locally
+			var j = get_task_index(this.id);
 			
-			$('#'+task_id).mouseup(function(e) {
-				// update locally
-				var j = get_task_index(this.id);
-				
-				endpos = $('#'+this.id).position();
-				
-				currentProject.tasks[j].effort += (endpos.left - ((currentProject.tasks[j].effort-centerx)*factor + largura/2 - factor*width/2))/factor;
-				currentProject.tasks[j].priority += (endpos.top - ((currentProject.tasks[j].priority-centery)*factor + altura/2 - factor*height/2))/factor;
-				// update priority & effort in DB
-				currentProject.tasks[j].saveTask();
-			});
+			endpos = $('#'+this.id).position();
 			
-			// Define double click event to edit the text in the task
-			$('#content_'+task_id).editable('ajax/updateTaskName.php',{
-					event: "dblclick",
-					onblur: "cancel",
-					style: "opacity: 0.5;"
-			});
+			currentProject.tasks[j].effort += (endpos.left - ((currentProject.tasks[j].effort-centerx)*factor + largura/2 - factor*width/2))/factor;
+			currentProject.tasks[j].priority += (endpos.top - ((currentProject.tasks[j].priority-centery)*factor + altura/2 - factor*height/2))/factor;
+			// update priority & effort in DB
+			currentProject.tasks[j].saveTask();
+		});
+		
+		// Define double click event to edit the text in the task
+		$('#content_'+task_id).editable('ajax/updateTaskName.php',{
+				event: "dblclick",
+				onblur: "cancel",
+				style: "opacity: 0.5;",
+				type: "textarea"
+		});
+		
+		// Mouse over the post it, show and hide the top right icons
+		$('#'+task_id).hover(
+			function(){
+				// console.log("entrei no hover");
+				$("#close_"+task_id).css({"visibility":"visible"});
+				$("#check_"+task_id).css({"visibility":"visible"});
+				$("#sprint_"+task_id).css({"visibility":"visible"});
+			},
+			function(){
+				// console.log("sai do hover");
+				$("#close_"+task_id).css({"visibility":"hidden"});
+				$("#check_"+task_id).css({"visibility":"hidden"});
+				$("#sprint_"+task_id).css({"visibility":"hidden"});
+			}
+		);
+		
+		// Set the actions for the icons
+		// Delete task
+		$('#close_'+task_id).click(function(e){
+			// First, delete the task on the database
+			currentProject.tasks[get_task_index(task_id)].deleteTask();
 			
-			// Mouse over the post it, show and hide the top right icons
-			$('#'+task_id).hover(
-				function(){
-					// console.log("entrei no hover");
-					$("#close_"+task_id).show();
-					$("#check_"+task_id).show();
-					$("#sprint_"+task_id).show();
-				},
-				function(){
-					// console.log("sai do hover");
-					$("#close_"+task_id).hide();
-					$("#check_"+task_id).hide();
-					$("#sprint_"+task_id).hide();
-				}
-			);
+			// Now, remove the corresponding post it
+			$('#'+task_id).remove();
+		});
+		
 			
-			// Set the actions for the icons
-			// Delete task
-			$('#close_'+task_id).click(function(e){
-				// First, delete the task on the database
-				deleteTask(task_id);
-				
-				// Now, remove the corresponding post it
-				// $('#'+task_id).fadeOut();
-				$('#'+task_id).remove();
-			});
+		// To be done in this sprint
+		$('#sprint_'+task_id).click(function(e){
+			// Get the task index
+			index = get_task_index(task_id);
 			
-			// To be done in this sprint
-			$('#sprint_'+task_id).click(function(e){
-				// Make necessary changes on the DB
-				set_task_sprint(currentProject.tasks[get_task_index(task_id)],(sprint == 1)?0:currentProject.sprint);
-				
-				// Change the icon image
-				if(sprint == 1){
-					$(this).attr("src","css/images/remove_from_sprint.png");
-					sprint = 2;
-				}
-				else {
-					$(this).attr("src","css/images/add_to_sprint.png");
-					sprint = 1;
-				}
-			});
-		// }
+			sprint = ((currentProject.currentSprint == currentProject.tasks[index].idsprint)? 0 : currentProject.currentSprint);
+			
+			// Make necessary changes on the DB
+			console.log("Vou chamar o set task sprint para a task (" + task_id + "," + currentProject.tasks[index].name + ") com index = " + index + " e o sprint = " + sprint);
+			set_task_sprint(task_id,sprint);
+			
+			// Make changes locally
+			currentProject.tasks[index].idsprint = sprint;
+			
+			// Change the icon image
+			$(this).attr("src","css/images/" + addtosprint_path(currentProject.tasks[index]));
+		});
+		
+		// Set as done
+		$('#check_'+task_id).click(function(e){
+			// Get the task index
+			index = get_task_index(task_id);
+			
+			// Make necessary changes on the DB
+			set_task_done(task_id,currentProject.currentSprint);
+			
+			// Make changes locally
+			currentProject.tasks[index].sprintdone = currentProject.currentSprint;
+		});
 	}
 	
 	
@@ -200,20 +213,19 @@ function canvasInit(tasks) {
 	}
 	
 	// Returns the index of the correspondent task id
-	function get_task_index(task_id){
-		var j;
-		for (j = 0; currentProject.tasks[j] != null; j++)
+	function get_task_index(task_id) {
+		for (var j = 0; currentProject.tasks[j] != null; j++)
 			if (currentProject.tasks[j].id == task_id)
-				break;
-		return j;
+				return j;
+		return null;
 	}
 	
 	// Creates the post it
 	function create_postit(i){
 		$("#whiteboard").append('<div id="' + currentProject.tasks[i].id + '" class="postit">' +
-									'<img id="close_' + currentProject.tasks[i].id + '" title="Delete task" src="css/images/delete_icon.png" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; display:none"/>' +
-									'<img id="check_' + currentProject.tasks[i].id + '" title="Mark as done" src="css/images/check_icon.png" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; display:none"/>' +
-									'<img id="sprint_' + currentProject.tasks[i].id + '" title="Add to the current sprint" src="css/images/' + addtosprint_path(currentProject.tasks[i]) + '" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; display:none"/>' +
+									'<img id="close_' + currentProject.tasks[i].id + '" title="Delete task" src="css/images/delete_icon.png" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; visibility:hidden;"/>' +
+									'<img id="check_' + currentProject.tasks[i].id + '" title="Mark as done" src="css/images/check_icon.png" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; visibility:hidden;"/>' +
+									'<img id="sprint_' + currentProject.tasks[i].id + '" title="Add to the current sprint" src="css/images/' + addtosprint_path(currentProject.tasks[i]) + '" height="' + icon_height*factor + '" width="' + icon_width*factor + '" style="float:right; visibility:hidden;"/>' +
 									'<div id="content_'+currentProject.tasks[i].id+'" >' + currentProject.tasks[i].name + '</div>' +
 								"</div>");
 		$("#"+currentProject.tasks[i].id).draggable({ scroll: false , scrollSensitivity: 100, containment: 'parent' });

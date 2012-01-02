@@ -132,7 +132,6 @@ function loginSuccessCallback(data){
 
 // function called when the register ajax request is successful
 function registerSuccessCallback(data){
-		
 	if (data=="ok"){
 		showErrorMsg("Success","You have been successfully registered. Welcome.");
 		document.getElementById('loginemail').value = email;
@@ -158,13 +157,25 @@ function deleteTask(task_id){
 }
 
 // function to be called when adding or removing a certain task to the current project's sprint
-function set_task_sprint(task,sprint){
+function set_task_sprint(id,sprint){
 	$.ajax({
 		url: "ajax/setTaskSprint.php",
 		type: 'POST',
-		data: { id: task.id, sprint: sprint },
+		data: { id: id, sprint: sprint },
 		success: function(){
 			console.log("set task sprint successfull");
+		}
+	});
+}
+
+// function to be called when a task is considered done
+function set_task_done(id,sprint){
+	$.ajax({
+		url: "ajax/setTaskDone.php",
+		type: 'POST',
+		data: { id: id, sprint: sprint },
+		success: function(){
+			console.log("set task done successfull");
 		}
 	});
 }

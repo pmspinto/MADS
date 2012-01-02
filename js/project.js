@@ -18,11 +18,12 @@ function parseTasks(json, proj) {
 
 function Project(id) {
     this.id = id;
-    
+    this.currentSprint = 5;
     this.tasks = new Array();
     
     this.loadProjInfo = function() {
         console.log('loadProjInfo not done yet');
+		this.currentSprint = 5;
     }
     
     this.loadProjTasks = function() {
