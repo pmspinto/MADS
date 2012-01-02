@@ -9,3 +9,4 @@ function Config(){
 // Config.server + <relative_path>
 
 Config.server = "http://localhost/mads/";
+

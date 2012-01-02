@@ -251,7 +251,7 @@ function canvasmenu() {
 		'<button id="sprint_number" onclick="next_sprint();">' +
 			1 +
 		'</button>' +
-		'<button id="next_sprint" onclick="next_sprint();">' +
+		'<button id="next_sprint" onclick="javascript: actionNextSprint();">' +
 			'<img class="next_sprint_icon" src="css/images/next_sprint.png" align="absmiddle">' +
 		'</button>' +
 		
