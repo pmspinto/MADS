@@ -18,7 +18,7 @@ var sprint = 1;
 function canvasInit(tasks) {		
 	for(var i = 0; currentProject.tasks[i]!=null; i++) {
 		if (currentProject.tasks[i].sprintdone == 0)
-			create_postit(i);
+			create_postit(currentProject.tasks[i]);
 	}
 	
 	/** EVENTOS ASSOCIADOS AO WHITEBOARD
@@ -43,7 +43,7 @@ function canvasInit(tasks) {
 		// Get the click position
 		// console.log(ev.pageX + " " + ev.pageY);
 		
-		create_postit(currentProject.tasks.length - 1);
+		create_postit(new_task);
 	});
 	
 	// Scroll, zoom-in e zoom-out
@@ -60,7 +60,7 @@ function canvasInit(tasks) {
 				if (currentProject.tasks[i].drawn == true) {
 					newheight = canvas_factor*height;
 					newwidth = canvas_factor*width;
-					resize_postit(newheight,newwidth,i);
+					resize_postit(newheight,newwidth,currentProject.tasks[i]);
 				}
 			}
 		}
@@ -119,77 +119,81 @@ function get_task_index(task_id) {
 	return null;
 }
 
-function resize_postit(newheight,newwidth,i){
+function resize_postit(newheight,newwidth,task){
 	//Resize the post it
-	$("#"+currentProject.tasks[i].id).css( { 
+	$("#"+task.id).css( { 
 		'width': newwidth,
 		'height': newheight,
 		'font-size': canvas_factor*100+'%',
-		'left': ((currentProject.tasks[i].effort-centerx)*canvas_factor + largura/2 - newwidth/2)+'px',
-		'top': ((currentProject.tasks[i].priority-centery)*canvas_factor + altura/2 - newheight/2)+'px'
+		'left': ((task.effort-centerx)*canvas_factor + largura/2 - newwidth/2)+'px',
+		'top': ((task.priority-centery)*canvas_factor + altura/2 - newheight/2)+'px'
 	});
 	// Resize the icons
-	$('#close_'+currentProject.tasks[i].id).css( {
+	$('#close_'+task.id).css( {
 		'width': canvas_icon_width*canvas_factor,
 		'height': canvas_icon_height*canvas_factor
 	});
-	$('#check_'+currentProject.tasks[i].id).css( {
+	$('#check_'+task.id).css( {
 		'width': canvas_icon_width*canvas_factor,
 		'height': canvas_icon_height*canvas_factor
 	});
-	$('#sprint_'+currentProject.tasks[i].id).css( {
+	$('#sprint_'+task.id).css( {
 		'width': canvas_icon_width*canvas_factor,
 		'height': canvas_icon_height*canvas_factor
 	});
 }
 
+function destroy_postit(task) {
+	$('#'+task.id).remove();
+}
+
 // Creates the post it
-function create_postit(i){
-	currentProject.tasks[i].drawn = true;
+function create_postit(task){
+	task.drawn = true;
 		
-	$("#whiteboard").append('<div id="' + currentProject.tasks[i].id + '">' +
-								'<img id="close_' + currentProject.tasks[i].id + '" title="Delete task" src="css/images/delete_icon.png" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
-								'<img id="check_' + currentProject.tasks[i].id + '" title="Mark as done" src="css/images/' + taskdone_path(currentProject.tasks[i].sprintdone) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
-								'<img id="sprint_' + currentProject.tasks[i].id + '" title="Add to the current sprint" src="css/images/' + addtosprint_path(currentProject.tasks[i].idsprint) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
-								'<div id="content_'+currentProject.tasks[i].id+'" >' + currentProject.tasks[i].name + '</div>' +
+	$("#whiteboard").append('<div id="' + task.id + '">' +
+								'<img id="close_' + task.id + '" title="Delete task" src="css/images/delete_icon.png" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
+								'<img id="check_' + task.id + '" title="Mark as done" src="css/images/' + taskdone_path(task.sprintdone) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
+								'<img id="sprint_' + task.id + '" title="Add to the current sprint" src="css/images/' + addtosprint_path(task.idsprint) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
+								'<div id="content_'+ task.id+'" >' + task.name + '</div>' +
 							"</div>");
-	$("#"+currentProject.tasks[i].id).draggable({ scroll: false , scrollSensitivity: 100, containment: 'parent' });
-	define_postit_css(i, currentProject.tasks[i].priority,currentProject.tasks[i].effort);
-	bind_mouse_events(currentProject.tasks[i].id);
+	$("#"+task.id).draggable({ scroll: false , scrollSensitivity: 100, containment: 'parent' });
+	define_postit_css(task, task.priority,task.effort);
+	bind_mouse_events(task);
 }
 		
-function define_postit_css(i, priority,effort){
-	$("#"+currentProject.tasks[i].id).css({ 
+function define_postit_css(task, priority,effort){
+	$("#"+task.id).css({ 
 		'width' : (width*canvas_factor)+'px' , 
 		'height': (height*canvas_factor)+'px' , 
 		'padding' : '0.5em', 
 		'position':'absolute', 
+		'font-size': canvas_factor*100+'%',
 		'top':((priority-centery)*canvas_factor + altura/2 - canvas_factor*width/2)+'px', 
 		'left':((effort-centerx)*canvas_factor + largura/2 - canvas_factor*width/2)+'px'});
-	setTaskClass(currentProject.tasks[i]);
+	setTaskClass(task);
 }
 
 // EVENTOS DOS POST ITs
-function bind_mouse_events(task_id){
-	$('#'+task_id).mousedown(function(e) {
+function bind_mouse_events(task){
+	$('#'+task.id).mousedown(function(e) {
 		supress = true;
 		px = -1;
 	});
 	
-	$('#'+task_id).mouseup(function(e) {
+	$('#'+task.id).mouseup(function(e) {
 		// update locally
-		var j = get_task_index(this.id);
 		
-		endpos = $('#'+this.id).position();
+		endpos = $('#'+task.id).position();
 		
-		currentProject.tasks[j].effort += (endpos.left - ((currentProject.tasks[j].effort-centerx)*canvas_factor + largura/2 - canvas_factor*width/2))/canvas_factor;
-		currentProject.tasks[j].priority += (endpos.top - ((currentProject.tasks[j].priority-centery)*canvas_factor + altura/2 - canvas_factor*height/2))/canvas_factor;
+		task.effort += (endpos.left - ((task.effort-centerx)*canvas_factor + largura/2 - canvas_factor*width/2))/canvas_factor;
+		task.priority += (endpos.top - ((task.priority-centery)*canvas_factor + altura/2 - canvas_factor*height/2))/canvas_factor;
 		// update priority & effort in DB
-		currentProject.tasks[j].saveTask();
+		task.saveTask();
 	});
 	
 	// Define double click event to edit the text in the task
-	$('#content_'+task_id).editable('ajax/updateTaskName.php',{
+	$('#content_'+task.id).editable('ajax/updateTaskName.php',{
 			event: "dblclick",
 			onblur: "cancel",
 			select: "true",
@@ -203,69 +207,60 @@ function bind_mouse_events(task_id){
 	});
 	
 	// Mouse over the post it, show and hide the top right icons
-	$('#'+task_id).hover(
+	$('#'+task.id).hover(
 		function(){
 			// console.log("entrei no hover");
-			$("#close_"+task_id).css({"visibility":"visible"});
-			$("#check_"+task_id).css({"visibility":"visible"});
-			$("#sprint_"+task_id).css({"visibility":"visible"});
+			$("#close_"+task.id).css({"visibility":"visible"});
+			$("#check_"+task.id).css({"visibility":"visible"});
+			$("#sprint_"+task.id).css({"visibility":"visible"});
 		},
 		function(){
 			// console.log("sai do hover");
-			$("#close_"+task_id).css({"visibility":"hidden"});
-			$("#check_"+task_id).css({"visibility":"hidden"});
-			$("#sprint_"+task_id).css({"visibility":"hidden"});
+			$("#close_"+task.id).css({"visibility":"hidden"});
+			$("#check_"+task.id).css({"visibility":"hidden"});
+			$("#sprint_"+task.id).css({"visibility":"hidden"});
 		}
 	);
 	
 	// Set the actions for the icons
 	// Delete task
-	$('#close_'+task_id).click(function(e){
+	$('#close_'+task.id).click(function(e){
 		// First, delete the task on the database
-		currentProject.tasks[get_task_index(task_id)].deleteTask();
+		task.deleteTask();
 		
 		// Now, remove the corresponding post it
 		// $('#'+task_id).fadeOut();
-		$('#'+task_id).remove();
+		$('#'+task.id).remove();
 	});
 	
 	// To be done in this sprint
-	$('#sprint_'+task_id).click(function(e){
-		// Get the task index
-		index = get_task_index(task_id);
-		
-		sprint = ((currentProject.currentSprint == currentProject.tasks[index].idsprint)? 0 : currentProject.currentSprint);
-		
-		// Make necessary changes on the DB
-		// console.log("Vou chamar o set task sprint para a task (" + task_id + "," + currentProject.tasks[index].name + ") com index = " + index + " e o sprint = " + sprint);
-		set_task_sprint(task_id,sprint);
-		
-		// Make changes locally
-		currentProject.tasks[index].idsprint = sprint;
+	$('#sprint_'+task.id).click(function(e) {		
+		sprint = ((currentProject.currentSprint == task.idsprint)? 0 : currentProject.currentSprint);
+		task.idsprint = sprint;
+		task.saveTask();
 		
 		// Change the icon image
-		$(this).attr("src","css/images/" + addtosprint_path(currentProject.tasks[index].idsprint));
+		$(this).attr("src","css/images/" + addtosprint_path(task.idsprint));
 		
-		setTaskClass(currentProject.tasks[index]);
+		setTaskClass(task);
 	});
 	
 	// Set as done
-	$('#check_'+task_id).click(function(e){
-		// Get the task index
-		index = get_task_index(task_id);
+	$('#check_'+task.id).click(function(e){
+		sprint = ((task.sprintdone == 0)? currentProject.currentSprint : 0);
+		task.sprintdone = sprint;
+		task.saveTask();		
 		
-		// Make necessary changes on the DB
-		sprint = ((currentProject.tasks[index].sprintdone == 0)? currentProject.currentSprint : 0);
-		set_task_done(task_id,sprint);
-		
-		// Make changes locally
-		currentProject.tasks[index].sprintdone = sprint;
+		if (document.menuform.filter_done.checked == false && task.sprintdone > 0) {
+			destroy_postit(task);
+			task.drawn = false;
+		}
 		
 		// Change the icon
 		$(this).attr("src","css/images/" + taskdone_path(sprint));
 		
 		// change the image
-		setTaskClass(currentProject.tasks[index]);
+		setTaskClass(task);
 	});
 }
 
@@ -304,10 +299,17 @@ function setTaskClass(task) {
 function filterByDone() {
 	if (document.menuform.filter_done.checked == true) {
 		for (var i = 0; currentProject.tasks[i] != null; i++)
-			if (currentProject.tasks[i].drawn == false)
-				create_postit(i);
+			if (currentProject.tasks[i].drawn == false) {
+				create_postit(currentProject.tasks[i]);
+				currentProject.tasks[i].drawn = true;
+			}
 	}
 	else {
+		for (var i = 0; currentProject.tasks[i] != null; i++)
+			if (currentProject.tasks[i].drawn == true && currentProject.tasks[i].sprintdone > 0) {
+				destroy_postit(currentProject.tasks[i]);
+				currentProject.tasks[i].drawn = false;
+			}
 	}
 }	
 
