@@ -310,3 +310,8 @@ function filterByDone() {
 	else {
 	}
 }	
+
+// function to be called when the user clicks the button to advance the current sprint of the project
+function next_sprint() {
+	console.log("LOOL");
+}

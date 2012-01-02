@@ -224,10 +224,10 @@ function projectmenu() {
 function canvasmenu() {
 	$('#menu_canvas').html(
 		'<form name="menuform">'+
-		'<button id="sprint_number" onclick="next_sprint();">' +
+		'<button id="sprint_number" onclick="javascript: next_sprint();">' +
 			1 +
 		'</button>' +
-		'<button id="next_sprint" onclick="next_sprint();">' +
+		'<button id="next_sprint" onclick="javascript: next_sprint();">' +
 			'<img class="next_sprint_icon" src="css/images/next_sprint.png" align="absmiddle">' +
 		'</button>' +
 		
