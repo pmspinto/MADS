@@ -248,14 +248,10 @@ function projectmenu() {
 function canvasmenu() {
 	$('#menu_canvas').html(
 		'<form name="menuform">'+
-		'<button id="sprint_number" onclick="javascript: next_sprint();">' +
+		'<button id="sprint_number">' +
 			1 +
 		'</button>' +
-<<<<<<< HEAD
-		'<button id="next_sprint" onclick="javascript: next_sprint();">' +
-=======
-		'<button id="next_sprint" onclick="javascript: actionNextSprint();">' +
->>>>>>> 83b84d686ddb834ae26d6be67f264b9110699b94
+		'<button id="next_sprint">' +
 			'<img class="next_sprint_icon" src="css/images/next_sprint.png" align="absmiddle">' +
 		'</button>' +
 		
@@ -267,10 +263,15 @@ function canvasmenu() {
 			'Sprint' +
 		'</button>'+
 		'</form>');
-		
+	
 	$('#filter_done').button();
 	$('#filter_sprint').button();
 	$('#next_sprint').button();
 	$('#sprint_number').button();
 	$('#sprint_number').attr("disabled", true);
+	
+	$('#next_sprint').click(function(ev) {
+		ev.preventDefault();
+		actionNextSprint();
+	});
 }

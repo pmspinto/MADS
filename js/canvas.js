@@ -153,8 +153,8 @@ function create_postit(task){
 		
 	$("#whiteboard").append('<div id="' + task.id + '">' +
 								'<img id="close_' + task.id + '" title="Delete task" src="css/images/delete_icon.png" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
-								'<img id="check_' + task.id + '" title="Mark as done" src="css/images/' + taskdone_path(task.sprintdone) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
-								'<img id="sprint_' + task.id + '" title="Add to the current sprint" src="css/images/' + addtosprint_path(task.idsprint) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
+								'<img id="check_' + task.id + '" title="' + taskdone_title(task.sprintdone) +'" src="css/images/' + taskdone_path(task.sprintdone) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
+								'<img id="sprint_' + task.id + '" title="' + addtosprint_title(task.idsprint) + '" src="css/images/' + addtosprint_path(task.idsprint) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
 								'<div id="content_'+ task.id+'" style="height: 65%">' + task.name + '</div>' +
 							"</div>");
 	$("#"+task.id).draggable({ scroll: false , scrollSensitivity: 100, containment: 'parent' });
@@ -212,7 +212,8 @@ function bind_mouse_events(task){
 			// console.log("entrei no hover");
 			$("#close_"+task.id).css({"visibility":"visible"});
 			$("#check_"+task.id).css({"visibility":"visible"});
-			$("#sprint_"+task.id).css({"visibility":"visible"});
+			if(task.sprintdone == 0)
+				$("#sprint_"+task.id).css({"visibility":"visible"});
 		},
 		function(){
 			// console.log("sai do hover");
@@ -241,7 +242,7 @@ function bind_mouse_events(task){
 		
 		// Change the icon image
 		$(this).attr("src","css/images/" + addtosprint_path(task.idsprint));
-		
+		$(this).attr("title",addtosprint_title(task.idsprint));
 		setTaskClass(task);
 	});
 	
@@ -258,7 +259,7 @@ function bind_mouse_events(task){
 		
 		// Change the icon
 		$(this).attr("src","css/images/" + taskdone_path(sprint));
-		
+		$(this).attr("title",taskdone_title(sprint));
 		// change the image
 		setTaskClass(task);
 	});
@@ -270,6 +271,18 @@ function addtosprint_path(idsprint){
 	if(idsprint == 0)
 		return "add_to_sprint.png";
 	else return "remove_from_sprint.png";
+}
+
+function addtosprint_title(idsprint){
+	if(idsprint == 0)
+		return "Add to current sprint";
+	else return "Remove from current sprint";
+}
+
+function taskdone_title(sprintdone){
+	if(sprintdone == 0)
+		return "Mark as done";
+	else return "Mark as not done";
 }
 
 function taskdone_path(sprintdone){
@@ -311,9 +324,9 @@ function filterByDone() {
 				currentProject.tasks[i].drawn = false;
 			}
 	}
-}	
+}
 
 // function to be called when the user clicks the button to advance the current sprint of the project
-function next_sprint() {
-	console.log("LOOL");
+function actionNextSprint(){
+	
 }

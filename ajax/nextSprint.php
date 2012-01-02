@@ -9,10 +9,7 @@
 	require "db.php";
 	
 	$idproj = $_POST['projid'];
-	$projs = $_POST['projs'];
-	
 	// $result = mysql_query($query) or die('Error incrementing sprint: ' . mysql_error());
 
 	// echo $result;
-	echo json_decode($projs);
 ?>
