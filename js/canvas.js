@@ -18,7 +18,7 @@ var sprint = 1;
 function canvasInit(tasks) {		
 	for(var i = 0; currentProject.tasks[i]!=null; i++) {
 		if (currentProject.tasks[i].sprintdone == 0)
-			create_postit(i);
+			create_postit(tasks[i].id);
 	}
 	
 	/** EVENTOS ASSOCIADOS AO WHITEBOARD
@@ -141,6 +141,10 @@ function resize_postit(newheight,newwidth,i){
 		'width': canvas_icon_width*canvas_factor,
 		'height': canvas_icon_height*canvas_factor
 	});
+}
+
+function destroy_postit(i) {
+	$('#'+i).remove();
 }
 
 // Creates the post it
@@ -298,9 +302,17 @@ function setTaskClass(task) {
 function filterByDone() {
 	if (document.menuform.filter_done.checked == true) {
 		for (var i = 0; currentProject.tasks[i] != null; i++)
-			if (currentProject.tasks[i].drawn == false)
+			if (currentProject.tasks[i].drawn == false) {
 				create_postit(i);
+				currentProject.tasks[i].drawn = true;
+			}
 	}
 	else {
+		for (var i = 0; currentProject.tasks[i] != null; i++)
+			if (currentProject.tasks[i].drawn == true && currentProject.tasks[i].sprintdone > 0) {
+				destroy_postit(i);
+				currentProject.tasks[i].drawn = false;
+			}
+		
 	}
 }	
