@@ -27,6 +27,7 @@
 		$(document).ready(function() { 
 			// before running any tests, clear the database
 			clearDB();
+			QUnit.config.reorder = false;
 
 			module("Login");  
 			test("Incorrect password", testIncorrectLoginAction);
@@ -42,6 +43,9 @@
 			module("Tasks");
 			test("Tasks for a project", tasksProject);
 			test("Tasks for a user", tasksUser);
+			test("Add a task", addTask);
+			test("Save a task", saveTask);
+			test("Delete a task", deleteTask);
 		});
 		
     </script>  
