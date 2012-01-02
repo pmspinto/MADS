@@ -197,7 +197,13 @@ function bind_mouse_events(task_id){
 	$('#content_'+task_id).editable('ajax/updateTaskName.php',{
 			event: "dblclick",
 			onblur: "cancel",
-			style: "opacity: 0.5;",
+			select: "true",
+			// style: "opacity: 0.5;",
+			style: "inherit",
+			indicator : 'Saving...',
+			tooltip : 'Double click to edit...',
+			cancel : 'Cancel',
+			submit : 'OK'
 			// type: "textarea"
 	});
 	
