@@ -144,16 +144,10 @@ function resize_postit(newheight,newwidth,i){
 }
 
 // Creates the post it
-function create_postit(i){	
-	var postitclass;
-	if (currentProject.tasks[i].sprintdone > 0)
-		postitclass = "postitdone";
-	else
-		postitclass = "postit";
-		
+function create_postit(i){
 	currentProject.tasks[i].drawn = true;
 		
-	$("#whiteboard").append('<div id="' + currentProject.tasks[i].id + '" class="'+postitclass+'">' +
+	$("#whiteboard").append('<div id="' + currentProject.tasks[i].id + '">' +
 								'<img id="close_' + currentProject.tasks[i].id + '" title="Delete task" src="css/images/delete_icon.png" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
 								'<img id="check_' + currentProject.tasks[i].id + '" title="Mark as done" src="css/images/' + taskdone_path(currentProject.tasks[i].sprintdone) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
 								'<img id="sprint_' + currentProject.tasks[i].id + '" title="Add to the current sprint" src="css/images/' + addtosprint_path(currentProject.tasks[i].idsprint) + '" height="' + canvas_icon_height*canvas_factor + '" width="' + canvas_icon_width*canvas_factor + '" style="float:right; visibility:hidden;"/>' +
@@ -172,6 +166,7 @@ function define_postit_css(i, priority,effort){
 		'position':'absolute', 
 		'top':((priority-centery)*canvas_factor + altura/2 - canvas_factor*width/2)+'px', 
 		'left':((effort-centerx)*canvas_factor + largura/2 - canvas_factor*width/2)+'px'});
+	setTaskClass(currentProject.tasks[i]);
 }
 
 // EVENTOS DOS POST ITs
@@ -244,6 +239,8 @@ function bind_mouse_events(task_id){
 		
 		// Change the icon image
 		$(this).attr("src","css/images/" + addtosprint_path(currentProject.tasks[index].idsprint));
+		
+		setTaskClass(currentProject.tasks[index]);
 	});
 	
 	// Set as done
@@ -260,6 +257,9 @@ function bind_mouse_events(task_id){
 		
 		// Change the icon
 		$(this).attr("src","css/images/" + taskdone_path(sprint));
+		
+		// change the image
+		setTaskClass(currentProject.tasks[index]);
 	});
 }
 
@@ -275,6 +275,24 @@ function taskdone_path(sprintdone){
 	if(sprintdone == 0)
 		return "check_icon.png";
 	else return "uncheck_icon.png";
+}
+
+function setTaskClass(task) {
+	if (task.sprintdone > 0) {
+		$('#'+task.id).removeClass("postit");
+		$('#'+task.id).removeClass("postitsprint");
+		$('#'+task.id).addClass("postitdone");
+	}
+	else if (task.idsprint > 0) {
+		$('#'+task.id).removeClass("postit");
+		$('#'+task.id).removeClass("postitdone");
+		$('#'+task.id).addClass("postitsprint");
+	}
+	else {
+		$('#'+task.id).removeClass("postitsprint");
+		$('#'+task.id).removeClass("postitdone");
+		$('#'+task.id).addClass("postit");
+	}
 }
 
 function filterByDone() {
