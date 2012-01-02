@@ -14,7 +14,7 @@ function setdialog() {
 
 function switchdialog(newState) {
 	if(state == 1) 
-		$('#welcomedialog').dialog("destroy");
+		$('#welcomedialog').remove();
 	state = newState;
 	setdialog();
 }
@@ -91,7 +91,6 @@ function welcomedialog() {
 								});
 }
 function project() {
-	var menu = projectmenu();
 	$("#whiteboard").html( '<div id="projectdialog" title="Projects">'+
 								'<div id="projectmenu">'+
 									'<div id="projectbuttondiv">'+
@@ -115,12 +114,7 @@ function project() {
 	$('#proj_velocity').button();
 	$('#newproject').button();
 	
-	if(state == 2)
-		projectboard();
-	if(state == 3)
-		burndown();
-	if(state == 4)
-		velocity();
+	updatedialog();
 	
 	$('#proj_info').click(function(e) {
 		state = 2;
@@ -146,17 +140,18 @@ function project() {
 							  height: altura-200, 
 							  resizable: false, 
 							  closeOnEscape: false,
-							  close: function(event, ui) { canvasmenu(); canvasInit();}
+							  close: function(event, ui) {  canvasmenu(); canvasInit(); $("#projectdialog").remove();}
 							});
 }
 
 function updatedialog() {
 	if(state == 2) {
 		projectboard();
-	} else if(state == 3)
+	} else if(state == 3) {
 		burndown();
-	else 
+	} else  {
 		velocity();
+	}
 	projectmenu();
 }
 
@@ -278,6 +273,7 @@ function canvasmenu() {
 	$('#sprint_number').attr("disabled", true);
 	$('#backtoproject').button();
 	$('#backtoproject').click(function(evt) {
+		$("#whiteboard").html("");
 		project();
 		$('#menu_canvas').html("");
 		evt.preventDefault();	

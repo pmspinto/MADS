@@ -47,12 +47,12 @@
 				state = 1;
 
 				//manage globals when resizing
-				$(window).bind('resize', function() {
+				/*$(window).bind('resize', function() {
 					largura = $(window).width();
 					altura = $(window).height();
 					
 					init();
-				});
+				});*/
 				
 				init();
 			});

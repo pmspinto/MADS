@@ -155,8 +155,8 @@ function Project(id) {
 		
 		velo[0] = acc/this.currentSprint;
 		
-		console.log(spr);
-		console.log(velo);
+		//console.log(spr);
+		//console.log(velo);
 		
 		var velocity = new Array();
 		velocity['sprint'] = spr;
