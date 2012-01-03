@@ -389,7 +389,8 @@ function actionNextSprint(){
 			console.log(currentProject.tasks[index].name);
 			currentProject.tasks[index].idsprint = currentProject.currentSprint;
 			remvel -= (currentProject.tasks[index].effort+d)*s+1;
-		}
+		} else
+			break;
 	}
 	console.log("rem "+remvel);
 	
@@ -397,23 +398,12 @@ function actionNextSprint(){
 	for(var i = 0; i<currentProject.tasks.length; i++) {
 		if(currentProject.tasks[i].idsprint == currentProject.currentSprint && currentProject.tasks[i].sprintdone == 0) {
 			currentProject.tasks[i].idsprint += 1;
+			setTaskClass(currentProject.tasks[i]);
 			//call bd -> should be all at the same time;
 			$.ajax({
 				type: 'POST',
 				url: Config.server + 'ajax/updateTaskSprint.php',
-				data: { id: currentProject.tasks[i].id},
-				success: function(data){
-					;
-				},
-				error: function(){
-					console.log('error in getTasksProject');
-				}
-			});
-			//call bd, to project
-			$.ajax({
-				type: 'POST',
-				url: Config.server + 'ajax/updateSprint.php',
-				data: { id: currentProject.tasks[i].id},
+				data: { id: currentProject.tasks[i].id, idsprint: currentProject.tasks[i].idsprint},
 				success: function(data){
 					;
 				},
@@ -423,6 +413,18 @@ function actionNextSprint(){
 			});
 		}
 	}
+	//call bd, to project
+	$.ajax({
+		type: 'POST',
+		url: Config.server + 'ajax/updateSprint.php',
+		data: { id: currentProject.id},
+		success: function(data){
+			;
+		},
+		error: function(){
+			console.log('error in getTasksProject');
+		}
+	});
 	currentProject.currentSprint += 1;
 }
 

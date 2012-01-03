@@ -13,8 +13,9 @@
 	// P.S. 'user' até se definir o nome da sessão
 	
 	$id = $_POST['id'];
+	$idsprint = $_POST['idsprint'];
 	
-	$result = mysql_query("UPDATE tasks SET idsprint=idsprint+1 WHERE id = ".$id);
+	$result = mysql_query("UPDATE tasks SET idsprint=".$idsprint." WHERE id = ".$id);
 	
 	echo json_encode($resultArray);	
 ?>
