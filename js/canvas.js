@@ -331,5 +331,101 @@ function filterByDone() {
 
 // function to be called when the user clicks the button to advance the current sprint of the project
 function actionNextSprint(){
+	//calculate average velocity
+	vel = currentProject.getVelocity();
+	avgvel = vel['velocity'][0];
 	
+	//calculate effort scaling
+	var min = 10000000;
+	var max = -10000000;
+	var primin = 1000000;
+	var primax = -1000000;
+	for(var j=0; j<currentProject.tasks.length; j++) {
+		if(currentProject.tasks[j].effort < min)
+			min = currentProject.tasks[j].effort;
+		if(currentProject.tasks[j].effort > max)
+			max = currentProject.tasks[j].effort;
+		if(currentProject.tasks[j].priority < primin)
+			primin = currentProject.tasks[j].priority;
+		if(currentProject.tasks[j].priority > primax)
+			primax = currentProject.tasks[j].priority;
+	}
+	
+	var d = 1-min;
+	var s = (currentProject.maxeffort-1)/(max-min);
+	
+	//remaining velocity (all minus the marked -> update the mark)
+	var accvel = 0;
+	for(var i = 0; i<currentProject.tasks.length; i++)
+		if(currentProject.tasks[i].idsprint == currentProject.currentSprint) {
+			//console.log(currentProject.tasks[i].name);
+			accvel += (currentProject.tasks[i].effort+d)*s+1;
+		}
+	
+	remvel = avgvel - accvel;
+	console.log(remvel);
+		
+	//scale effort vs priority
+	var ed = -min;
+	var pd = -primin;
+	var es = 1/(max-min);
+	var ps = 1/(primax-primin);	
+	
+	//find new candidates and mark them
+	while(remvel > 0) {
+		var mindis = 100000;
+		var index = -1;
+		for(var i = 0; i<currentProject.tasks.length; i++)
+			if(currentProject.tasks[i].idsprint != currentProject.currentSprint && currentProject.tasks[i].sprintdone == 0) {
+				// in direct scaled distance
+				var dis = norm_squared((currentProject.tasks[i].effort+ed)*es, (currentProject.tasks[i].priority+pd)*ps);
+				
+				if(dis < mindis) {
+					mindis = dis;
+					index = i;
+				}
+			}
+		if(index != -1) { //mark and subtract
+			console.log(currentProject.tasks[index].name);
+			currentProject.tasks[index].idsprint = currentProject.currentSprint;
+			remvel -= (currentProject.tasks[index].effort+d)*s+1;
+		}
+	}
+	console.log("rem "+remvel);
+	
+	//update db sprint and currentsprint
+	for(var i = 0; i<currentProject.tasks.length; i++) {
+		if(currentProject.tasks[i].idsprint == currentProject.currentSprint && currentProject.tasks[i].sprintdone == 0) {
+			currentProject.tasks[i].idsprint += 1;
+			//call bd -> should be all at the same time;
+			$.ajax({
+				type: 'POST',
+				url: Config.server + 'ajax/updateTaskSprint.php',
+				data: { id: currentProject.tasks[i].id},
+				success: function(data){
+					;
+				},
+				error: function(){
+					console.log('error in getTasksProject');
+				}
+			});
+			//call bd, to project
+			$.ajax({
+				type: 'POST',
+				url: Config.server + 'ajax/updateSprint.php',
+				data: { id: currentProject.tasks[i].id},
+				success: function(data){
+					;
+				},
+				error: function(){
+					console.log('error in getTasksProject');
+				}
+			});
+		}
+	}
+	currentProject.currentSprint += 1;
+}
+
+function norm_squared(a, b) {
+	return a*a+b*b;
 }

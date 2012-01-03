@@ -282,5 +282,6 @@ function canvasmenu() {
 	$('#next_sprint').click(function(ev) {
 		ev.preventDefault();
 		actionNextSprint();
+		canvasmenu();
 	});
 }
